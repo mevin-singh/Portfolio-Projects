@@ -1,0 +1,242 @@
+Analysis was done on sample_airbnb dataset found in MongoDB Compass.
+
+
+Question 1: Create a query that lists all the properties (ie. documents) that accommodate more than 6 people (given by accommodates) and have exactly 50 reviews (given by number_of_reviews).
+
+{ $and: 
+    [
+        { accommodates: { $gt: 6 } },
+        { number_of_reviews: { $eq: 50 } }
+
+        ]
+    }
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Question 2: Create a query to list all the 1-bedroom (bedrooms) properties in Sydney, Australia (Sydney is the market, Australia is the country), where the entire home/apt (room_type) is rentable.
+
+{ $and: 
+ 
+ [ 
+    { 'address.market': 'Sydney' },
+    { 'address.country': 'Australia' },
+    {  bedrooms: 1 },
+    {  room_type: 'Entire home/apt' }
+  
+   ]
+  
+}
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Question 3: Create a query that lists all the properties in Brazil or Portugal (country) that have 6 or more beds (beds), across 3 or more rooms (bedrooms), where the entire home/apt is rentable (room_type).
+
+{ 
+  $and: 
+  [ 
+
+    { $or: [ {'address.country': 'Brazil' }, { 'address.country': 'Portugal' } ] },
+    { beds: { $gte: 6 } },
+    { bedrooms: { $gte: 3 } },
+    { room_type: 'Entire home/apt' }
+      
+      ] 
+}
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Question 4: Create a query that lists the various property_types found in Brazil, and the number of properties available for each of these types. Sort the list in descending order of the number of properties.
+
+[   
+    { $match: { 'address.country': 'Brazil' } }, 
+
+    { $group: { _id: '$property_type', 
+                total: { $count: { } } 
+            }   
+        }, 
+
+    { $sort: { total: -1 } }
+
+]   
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Question 5: Create a query to determine which market has the largest number of properties. The query should only output that single market and the number of properties it has.
+
+[
+    { $group: {
+                _id: '$address.market',
+                total: { $count: { } }
+
+                }
+    },
+
+    { $sort: { total: -1 } }, 
+
+    { $limit: 1 }
+
+]
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Question 6: Create a query to determine the average price of properties in each country. The query should output the 3 most expensive countries, and the average price of properties in each country.
+
+[
+    { $group: {
+                 _id: '$address.country',
+                 total: { $avg: '$price' } 
+
+                }
+    }, 
+
+    { $sort: { total: -1 } }, 
+
+    { $limit: 3 }
+]
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Question 7: Create a query that counts the number of properties offering each amenity. The query should output each amenity and the total number of properties offering that amenity.
+
+[
+    { $unwind: {
+
+                 path: '$amenities',
+                 includeArrayIndex: 'string',
+                 preserveNullAndEmptyArrays: false
+
+                }
+
+    }, 
+
+    { $group:  {
+
+                 _id: '$amenities',
+                 total: { $count: { } }
+
+                }
+    }, 
+
+    { $sort: { total: -1 } }
+
+]
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Question 8: Renters describe their properties using the summary, description, and space fields. Create a query counts the number of properties per country that offer Nespresso coffee.
+
+[
+    { $match: {
+
+     $or: [
+
+      { summary: RegExp('nespresso coffee', i) },
+
+      { description: RegExp('nespresso coffee', i) },
+
+      { space: RegExp('nespresso coffee', i) }
+
+            ]
+        }
+        
+    }, 
+
+    { $group:   {
+
+                 _id: '$address.country',
+                 total: { $count: { } }
+
+                }
+
+    }, 
+
+    { $sort: { total: -1 } }
+
+]
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Question 9: Create a query that computes the minimum price per day by the number of beds offered at a property.
+
+[
+    { $group:   {
+
+                 _id: '$beds',
+                 minimum_price: { $min: '$price' } 
+
+                }
+    }, 
+
+    { $sort: { minimum_price: -1 } }
+
+]
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Question 10:  Create a query that computes the average scores (across all properties) for each factor in review_scores. Your results should show the average score for review_score_accuracy, review_score_cleanliness, review_score_communication, etc.
+
+[
+
+    { $project: {
+
+                    scores: { $objectToArray: '$review_scores' }
+                
+                 }
+
+        }, 
+
+    { $unwind: { path: '$scores' } }, 
+
+    { $group:   {
+
+                 _id: '$scores.k',
+                 average: {
+                  $avg: '$scores.v'
+
+                }
+        }
+
+    }
+
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
