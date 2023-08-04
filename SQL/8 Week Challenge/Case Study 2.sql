@@ -417,18 +417,7 @@ ORDER BY n_times DESC
 LIMIT 1
 
 
--- 4. Generate an order item for each record in the customers_orders table in the format of one of the following:
---    Meat Lovers
---    Meat Lovers - Exclude Beef
---    Meat Lovers - Extra Bacon
---    Meat Lovers - Exclude Cheese, Bacon - Extra Mushroom, Peppers
-
--- 5. Generate an alphabetically ordered comma separated ingredient list for each pizza order from the customer_orders table and add a 2x in front of any relevant ingredients
---    For example: "Meat Lovers: 2xBacon, Beef, ... , Salami"
-SELECT * FROM pizza_toppings_cleaned
-
-
--- 6. What is the total quantity of each ingredient used in all delivered pizzas sorted by most frequent first?
+-- 5. What is the total quantity of each ingredient used in all delivered pizzas sorted by most frequent first?
 
 /*
 	D: Pricing and Ratings
@@ -451,13 +440,6 @@ SELECT * FROM pizza_toppings_cleaned
 --    Total number of pizzas
 -- 5. If a Meat Lovers pizza was $12 and Vegetarian $10 fixed prices with no cost for extras and each runner is paid $0.30 per kilometre traveled - how much money does Pizza Runner have left over after these deliveries?
 
-
-/* 
-	E: Bonus Question
-*/
-
--- If Danny wants to expand his range of pizzas - how would this impact the existing data design? 
--- Write an INSERT statement to demonstrate what would happen if a new Supreme pizza with all the toppings was added to the Pizza Runner menu?
 
 	
 	
