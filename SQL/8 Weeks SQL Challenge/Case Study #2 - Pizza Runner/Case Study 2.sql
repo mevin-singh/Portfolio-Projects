@@ -95,7 +95,7 @@ FROM pizza_runner.customer_orders
 
 -- 2. How many unique customer orders were made?
 SELECT customer_id,
-	COUNT(DISTINCT order_id) AS unique_customers
+	COUNT(DISTINCT order_id) AS unique_customer_orders
 FROM pizza_runner.customer_orders
 GROUP BY 1
 
