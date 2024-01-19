@@ -1,0 +1,206 @@
+/*
+	A: Joining both tables
+*/
+CREATE OR REPLACE VIEW COMBINED AS
+	(SELECT *
+		FROM FOODIE_FI.SUBSCRIPTIONS
+		INNER JOIN FOODIE_FI.PLANS USING (PLAN_ID))
+
+/*
+	B: Data Analysis Questions
+*/
+
+-- 1. How many customers has Foodie-Fi ever had?
+SELECT COUNT(DISTINCT CUSTOMER_ID) AS N_CUSTOMERS
+FROM FOODIE_FI.SUBSCRIPTIONS
+
+
+-- 2. What is the monthly distribution of trial plan start_date values for our dataset - use the start of the month as the group by value
+WITH truncated_date AS (
+	SELECT 
+		DATE(DATE_TRUNC('month', start_date)) AS start_date
+	FROM combined
+	WHERE plan_id = 0)
+	
+SELECT 
+	start_date,
+	COUNT(*) AS n_times
+FROM truncated_date
+GROUP BY 1
+ORDER BY 1
+
+-- 3. What plan start_date values occur after the year 2020 for our dataset? Show the breakdown by count of events for each plan_name
+SELECT 
+	plan_name,
+	COUNT(*) AS n_events
+FROM combined 
+WHERE start_date >= '2020-01-01'
+GROUP BY 1
+ORDER BY 2
+
+-- 4. What is the customer count and percentage of customers who have churned rounded to 1 decimal place?
+SELECT SUM(CASE
+				WHEN PLAN_NAME = 'churn' THEN 1
+				ELSE 0
+				END) AS N_CHURN,
+	ROUND(CAST(SUM(CASE
+						WHEN PLAN_NAME = 'churn' THEN 1
+						ELSE 0
+						END) AS numeric) / COUNT(DISTINCT CUSTOMER_ID) * 100, 1) AS PERC_CHURN
+FROM COMBINED
+
+-- 5. How many customers have churned straight after their initial free trial - what percentage is this rounded to the nearest whole number?
+WITH SEQUENCE_OF_EVENTS AS
+	(SELECT CUSTOMER_ID,
+			PLAN_NAME,
+	 		-- use lead to get the plan immediately after their free trial
+			LEAD(PLAN_NAME) OVER(PARTITION BY CUSTOMER_ID ORDER BY CUSTOMER_ID, START_DATE) AS NEXT_PLAN
+		FROM COMBINED
+		ORDER BY CUSTOMER_ID, START_DATE)
+		
+SELECT COUNT(DISTINCT CUSTOMER_ID) AS N_CUSTOMERS,
+	ROUND(CAST(COUNT(DISTINCT CUSTOMER_ID) AS numeric) /
+								(SELECT COUNT(DISTINCT CUSTOMER_ID)
+									FROM COMBINED) * 100, 1) AS CHURN
+FROM SEQUENCE_OF_EVENTS
+WHERE PLAN_NAME = 'trial'
+	AND NEXT_PLAN = 'churn'
+
+-- 6. What is the number and percentage of customer plans after their initial free trial?
+WITH SEQUENCE_OF_EVENTS AS
+	(SELECT CUSTOMER_ID,
+			PLAN_NAME,
+			LEAD(PLAN_NAME) OVER(PARTITION BY CUSTOMER_ID ORDER BY CUSTOMER_ID, START_DATE) AS NEXT_PLAN
+		FROM COMBINED
+		ORDER BY CUSTOMER_ID, START_DATE)
+		
+SELECT NEXT_PLAN AS PLAN_NAME,
+	COUNT(NEXT_PLAN) AS PLAN_AFTER_TRAIL,
+	ROUND(CAST(COUNT(NEXT_PLAN) AS numeric) /
+								(SELECT COUNT(DISTINCT CUSTOMER_ID)
+									FROM COMBINED) * 100, 1) AS PERC
+FROM SEQUENCE_OF_EVENTS
+WHERE PLAN_NAME = 'trial'
+GROUP BY 1
+
+-- 7. What is the customer count and percentage breakdown of all 5 plan_name values at 2020-12-31?
+WITH BEFORE_YEAR_END AS
+	(SELECT PLAN_NAME,
+			CUSTOMER_ID,
+			ROW_NUMBER() OVER(PARTITION BY CUSTOMER_ID ORDER BY START_DATE DESC) AS PLAN_ORDER
+		FROM COMBINED
+		WHERE START_DATE <= '2020-12-31' )
+		
+SELECT PLAN_NAME,
+	COUNT(DISTINCT CUSTOMER_ID) AS TOTAL_CUSTOMERS,
+	ROUND(CAST(COUNT(DISTINCT CUSTOMER_ID) AS numeric) /
+								(SELECT COUNT(DISTINCT CUSTOMER_ID)
+									FROM COMBINED) * 100, 1)
+FROM BEFORE_YEAR_END
+WHERE PLAN_ORDER = 1 -- only want the most recent plan
+GROUP BY 1
+
+-- 8. How many customers have upgraded to an annual plan in 2020?
+WITH IN_2020 AS
+	(SELECT PLAN_NAME,
+			CUSTOMER_ID,
+			ROW_NUMBER() OVER(PARTITION BY CUSTOMER_ID ORDER BY START_DATE) AS PLAN_ORDER
+		FROM COMBINED
+		WHERE DATE_PART('year', START_DATE) = 2020 ),
+		
+	UPGRADED AS
+	(SELECT PLAN_NAME,
+			CUSTOMER_ID
+		FROM IN_2020
+		WHERE PLAN_ORDER > 1
+			AND PLAN_NAME = 'pro annual' -- pro annual should not be the first plan
+)
+
+SELECT PLAN_NAME,
+	COUNT(DISTINCT CUSTOMER_ID) AS N_COUNT
+FROM UPGRADED
+GROUP BY 1
+
+-- 9. How many days on average does it take for a customer to an annual plan from the day they join Foodie-Fi?
+WITH ANNUAL_PLANS AS
+	(SELECT DISTINCT CUSTOMER_ID,
+			START_DATE AS ANNUAL_DATE
+		FROM COMBINED
+		WHERE PLAN_NAME = 'pro annual' ),
+		
+	FIRST_JOIN AS
+	(SELECT CUSTOMER_ID,
+			MIN(START_DATE) AS FIRST_JOINED
+		FROM COMBINED
+		GROUP BY 1),
+		
+	DAYS_TAKEN AS
+	(SELECT CUSTOMER_ID,
+			FIRST_JOINED,
+			ANNUAL_DATE,
+			ANNUAL_DATE - FIRST_JOINED AS NUM_DAYS
+		FROM ANNUAL_PLANS
+		INNER JOIN FIRST_JOIN USING (CUSTOMER_ID)
+		ORDER BY CUSTOMER_ID)
+		
+SELECT ROUND(AVG(NUM_DAYS), 0) AS AVERAGE_DAYS
+FROM DAYS_TAKEN
+
+-- 10. Can you further breakdown this average value into 30 day periods (i.e. 0-30 days, 31-60 days etc)
+WITH ANNUAL_PLANS AS
+	(SELECT DISTINCT CUSTOMER_ID,
+			START_DATE AS ANNUAL_DATE
+		FROM COMBINED
+		WHERE PLAN_NAME = 'pro annual' ),
+		
+	FIRST_JOIN AS
+	(SELECT CUSTOMER_ID,
+			MIN(START_DATE) AS FIRST_JOINED
+		FROM COMBINED
+		GROUP BY 1),
+		
+	DAYS_TAKEN AS
+	(SELECT CUSTOMER_ID,
+			FIRST_JOINED,
+			ANNUAL_DATE,
+			ANNUAL_DATE - FIRST_JOINED AS NUM_DAYS,
+			(ANNUAL_DATE - FIRST_JOINED) / 30 + 1 AS BIN
+		FROM ANNUAL_PLANS
+		INNER JOIN FIRST_JOIN USING (CUSTOMER_ID)
+		ORDER BY CUSTOMER_ID),
+		
+	BINS AS
+	(SELECT CUSTOMER_ID,
+			NUM_DAYS,
+			CASE
+				WHEN BIN = 1 THEN CONCAT((BIN-1), ' - ', BIN * 30, ' days')
+				ELSE CONCAT((BIN-1) * 30 + 1, ' - ', BIN * 30, ' days')
+			END AS PERIOD
+		FROM DAYS_TAKEN)
+		
+SELECT PERIOD,
+	COUNT(DISTINCT CUSTOMER_ID) AS NUM_COUNT,
+	ROUND(AVG(NUM_DAYS), 2) AS AVERAGE_DAYS
+FROM BINS
+GROUP BY 1
+
+-- 12. How many customers downgraded from a pro monthly to a basic monthly plan in 2020?
+WITH PRO_MONTHLY AS
+	(SELECT DISTINCT CUSTOMER_ID,
+			START_DATE AS PRO_DATE
+		FROM COMBINED
+		WHERE PLAN_NAME = 'pro monthly'),
+		
+	BASIC_MONTHLY AS
+	(SELECT DISTINCT CUSTOMER_ID,
+			START_DATE AS BASIC_DATE
+		FROM COMBINED
+		WHERE PLAN_NAME = 'basic monthly' )
+		
+SELECT CASE
+			WHEN COUNT(*) IS NULL THEN 0
+			ELSE COUNT(*)
+			END AS NUM_DOWNGRADES
+FROM PRO_MONTHLY AS PM
+INNER JOIN BASIC_MONTHLY AS BM USING (CUSTOMER_ID)
+WHERE PM.PRO_DATE < BM.BASIC_DATE
