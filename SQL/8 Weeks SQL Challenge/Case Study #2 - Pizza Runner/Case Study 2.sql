@@ -94,7 +94,7 @@ FROM pizza_runner.customer_orders
 
 
 -- 2. How many unique customer orders were made?
-SELECT COUNT(DISTINCT order_id) AS unique_customers
+SELECT COUNT(DISTINCT customer_id) AS unique_customers
 FROM pizza_runner.customer_orders
 
 -- 3. How many successful orders were delivered by each runner?
