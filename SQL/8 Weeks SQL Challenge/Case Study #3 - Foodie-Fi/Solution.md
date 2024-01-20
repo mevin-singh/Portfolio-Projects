@@ -21,6 +21,7 @@ CREATE OR REPLACE VIEW COMBINED AS
 SELECT COUNT(DISTINCT CUSTOMER_ID) AS N_CUSTOMERS
 FROM FOODIE_FI.SUBSCRIPTIONS
 ```
+Answer:
 | n_customers |
 | ------------------------- |
 | 1000                      |
@@ -42,6 +43,7 @@ FROM truncated_date
 GROUP BY 1
 ORDER BY 1
 ```
+Answer:
 | start_date | n_times |
 |------------|---------|
 | 2020-01-01 | 88      |
@@ -69,6 +71,7 @@ WHERE start_date > '2020-12-31'
 GROUP BY 1
 ORDER BY 2
 ```
+Answer:
 | plan_name     | n_events |
 | ------------- | ---------------- |
 | basic monthly | 8                |
@@ -90,6 +93,7 @@ SELECT SUM(CASE
 						END) AS numeric) / COUNT(DISTINCT CUSTOMER_ID) * 100, 1) AS PERC_CHURN
 FROM COMBINED
 ```
+Answer:
 | n_churn | perc_churn |
 | ----------------- | ---------------- |
 | 307               | 30.7             |
@@ -114,6 +118,7 @@ FROM SEQUENCE_OF_EVENTS
 WHERE PLAN_NAME = 'trial'
 	AND NEXT_PLAN = 'churn'
 ```
+Answer:
 | n_customers | churn_perc |
 | ----------------- | ---------------- |
 | 92              | 9            |
@@ -138,6 +143,7 @@ FROM SEQUENCE_OF_EVENTS
 WHERE PLAN_NAME = 'trial'
 GROUP BY 1
 ```
+Answer:
 | plan_name     | plan_after_trial | perc |
 | ------------- | --------------------------- | ----------------------------- |
 | basic monthly | 546                         | 54.6                          |
@@ -165,6 +171,7 @@ FROM BEFORE_YEAR_END
 WHERE PLAN_ORDER = 1 -- only want the most recent plan
 GROUP BY 1
 ```
+Answer:
 | plan_name     | total_customers | round |
 |---------------|-----------------|-------|
 | "basic monthly" | 224           | 22.4  |
@@ -197,6 +204,7 @@ SELECT PLAN_NAME,
 FROM UPGRADED
 GROUP BY 1
 ```
+Answer:
 | plan_name  | n_count |
 | ---------- | ------------------- |
 | pro annual | 195                 |
@@ -229,6 +237,7 @@ WITH ANNUAL_PLANS AS
 SELECT ROUND(AVG(NUM_DAYS), 0) AS AVERAGE_DAYS
 FROM DAYS_TAKEN
 ```
+Answer:
 | plan_name  | average_days |
 | ---------- | ------------ |
 | pro annual | 105          |
@@ -289,6 +298,7 @@ ORDER BY
 		 WHEN PERIOD = '331 - 360 days' THEN 12
     END
 ```
+Answer:
 | period       | num_count | average_days |
 |--------------|-----------|--------------|
 | 0 - 30 days  | 48        | 9.54         |
@@ -328,6 +338,7 @@ FROM PRO_MONTHLY AS PM
 INNER JOIN BASIC_MONTHLY AS BM USING (CUSTOMER_ID)
 WHERE PM.PRO_DATE < BM.BASIC_DATE
 ```
+Answer:
 | num_downgrades |
 | -------------- |
 | 0              |

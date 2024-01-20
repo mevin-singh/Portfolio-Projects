@@ -104,6 +104,7 @@ CREATE OR REPLACE VIEW pizza_toppings_cleaned AS (
 SELECT COUNT(*) AS n_pizzas
 FROM #customer_orders;
 ````
+Answer:
 | number_of_pizza_ordered |
 | ----------------------- |
 | 14                      |
@@ -118,7 +119,7 @@ SELECT customer_id,
 FROM pizza_runner.customer_orders
 GROUP BY 1
   ````
-
+Answer:
 | customer_id | unique_customer_orders |
 | ----------- | ---------------------- |
 | 101         | 3                      |
@@ -136,6 +137,7 @@ FROM RUNNER_ORDERS_CLEANED
 WHERE CANCELLATION = 0
 GROUP BY 1
 ```
+Answer:
 | runner_id | delivered_orders |
 | --------- | ---------------- |
 | 1         | 4                |
@@ -161,7 +163,7 @@ FROM combined
 GROUP BY 1
 ORDER BY 1, 2
 ```
-
+Answer:
 | pizza_name | n_pizzas |
 | ---------- | -------------------------- |
 | Meatlovers | 9                          |
@@ -187,6 +189,7 @@ FROM combined
 GROUP BY 1
 ORDER BY 1
 ```
+Answer:
 | customer_id | n_meatlovers | n_vegetarian |
 | ----------- | ---------- | -------------------------- |
 | 101         | 2          | 0                          |
@@ -214,6 +217,7 @@ GROUP BY 1
 ORDER BY 2 DESC
 LIMIT 1
 ```
+Answer:
 | order_id | n_pizzas       |
 | -------- | -------------- |
 | 4        | 3              |
@@ -237,6 +241,7 @@ FROM combined
 GROUP BY 1
 ORDER BY 1
 ```
+Answer:
 | customer_id | n_at_least_1_change | n_no_change |
 | ----------- | ---------- | -------------------------- |
 | 101         | 0          | 2                          |
@@ -262,6 +267,7 @@ SELECT
 FROM combined
 WHERE exclusions IS NOT NULL AND extras IS NOT NULL 
 ```
+Answer:
 | n_pizzas |
 | ---------------- |
 | 1                |
@@ -277,6 +283,7 @@ FROM customer_orders_cleaned
 GROUP BY 1 
 ORDER BY 1
 ```
+Answer:
 | order_hour | n_orders|
 | ----- | -------------- |
 | 11    | 2              |
@@ -297,6 +304,7 @@ FROM customer_orders_cleaned
 GROUP BY 1 
 ORDER BY 1
 ```
+Answer:
 | day_of_week | n_orders |
 | ----------- | -------------- |
 | Friday      | 2              |
@@ -328,7 +336,7 @@ FROM week_nums
 GROUP BY 1
 ORDER BY 1
 ```
-
+Answer:
 | week_num | n_runners |
 | -------------- | ----------------------- |
 | 1         | 2                       |
@@ -366,6 +374,7 @@ FROM arrival_times
 GROUP BY 1
 ORDER BY 1
 ```
+Answer:
 | runner_id | avg_time_to_arrive |
 | --------- | ------------------------------ |
 | 1         | 15.65                          |
@@ -410,6 +419,7 @@ FROM num_pizzas
 GROUP BY 1 
 ORDER BY 1
 ```
+Answer:
 | num_pizza | avg_prep_time_mins |
 | --------- | ------------------------------ |
 | 1         | 12.36                          |
@@ -438,6 +448,7 @@ FROM combined
 GROUP BY 1
 ORDER BY 1
 ```
+Answer:
 | customer_id | average_distance_km  |
 | ----------- | -------------------  |
 | 101         | 20.00                |
@@ -465,6 +476,7 @@ SELECT
 	MAX(duration_mins) - MIN(duration_mins) AS difference_mins
 FROM combined
 ```
+Answer:
 | longest_delivery_mins| shortest_delivery_mins | difference_mins |
 | -------------------- | ---------------------- | --------------- |
 | 40                   | 10                     |   30            |
@@ -493,6 +505,7 @@ SELECT
 	ROUND(distance/duration_hrs, 2) AS avg_speed_kmph
 FROM combined
 ```
+Answer:
 | order_id | runner_id | avg_speed_kmph |
 | -------- | --------- | -------------------- |
 | 1        | 1         | 37.50                |
@@ -519,6 +532,7 @@ FROM runner_orders_cleaned
 GROUP BY 1
 ORDER BY 1
 ```
+Answer:
 | runner_id | successful_orders  | n_orders | success_perc |
 | --------- | ------------------ | -------- | ------------ |
 | 1         | 4                  | 4        | 100          |
@@ -535,6 +549,7 @@ SELECT
 	*
 FROM pizza_toppings_cleaned 
 ```
+Answer:
 | pizza_id | topping_id | topping_name |
 |----------|------------|--------------|
 | 1        | 1          | "Bacon"      |
@@ -579,6 +594,7 @@ ON a.extras = b.topping_id
 ORDER BY n_times DESC
 LIMIT 1
 ```
+Answer:
 | topping_name     | n_times |
 | ---------------- | ---------------- |
 | Bacon            | 4                |
@@ -606,6 +622,7 @@ ON a.exclusions = b.topping_id
 ORDER BY n_times DESC
 LIMIT 1
 ```
+Answer:
 | topping_name     | n_times |
 | ---------------- | ---------------- |
 | Cheese           | 4                |
@@ -658,6 +675,7 @@ SELECT topping_name, counts
 FROM n_toppings
 ORDER BY counts DESC
 ```
+Answer:
 | topping_name | counts |
 |--------------|--------|
 | "Cheese"     | 13     |
@@ -700,7 +718,7 @@ WITH COMBINED AS
 SELECT *
 FROM REVENUE
 ```
-
+Answer:
 | Revenue           |
 | ----------------- |
 | 184               |
@@ -737,6 +755,7 @@ WITH COMBINED AS
 SELECT *
 FROM REVENUE
 ```
+Answer:
 | Revenue           |
 | ----------------- |
 | 190               |
@@ -770,6 +789,7 @@ WITH SUCCESSFUL_DELIVERIES AS
 SELECT *
 FROM REVENUE
 ```
+Answer:
 | total_profit          |
 | --------------------- |
 | 82.38                 |  

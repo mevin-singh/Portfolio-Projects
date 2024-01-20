@@ -85,6 +85,8 @@ CREATE OR REPLACE VIEW CLEAN_WEEKLY_SALES AS
 SELECT * FROM CLEAN_WEEKLY_SALES
 LIMIT 10
 ```
+Answer:
+
 First 10 rows:
 
 | week_date  | week_number | month_number | calendar_year | region | platform | segment | age_band     | demographic  | customer_type | transactions | sales   | avg_transaction |
@@ -104,11 +106,13 @@ First 10 rows:
 
 ## 🛍 B. Data Exploration
 
+
 **1. What day of the week is used for each week_date value?**
 ```sql
 SELECT DISTINCT TO_CHAR(WEEK_DATE, 'Day') AS DAY_NAME
 FROM CLEAN_WEEKLY_SALES
 ```
+Answer:
 |day_name|
 |----|
 |Monday|
@@ -127,6 +131,7 @@ WHERE WEEK_NUM NOT IN
 		(SELECT DISTINCT WEEK_NUMBER
 			FROM CLEAN_WEEKLY_SALES)
 ```
+Answer:
 | week_num |
 |----------|
 | 1        |
@@ -168,6 +173,7 @@ FROM CLEAN_WEEKLY_SALES
 GROUP BY 1
 ORDER BY 1
 ```
+Answer:
 | calendar_year | total_transactions |
 |---------------|--------------------|
 | 2018          | 346406460          |
@@ -185,6 +191,7 @@ FROM CLEAN_WEEKLY_SALES
 GROUP BY 1, 2
 ORDER BY 2, 3 DESC
 ```
+Answer:
 For the month of march (as an example):
 | region       | month_number | total_sales |
 |--------------|--------------|-------------|
@@ -206,6 +213,7 @@ FROM CLEAN_WEEKLY_SALES
 GROUP BY 1
 ORDER BY 2 DESC
 ```
+Answer:
 | platform | total_transactions |
 |----------|--------------------|
 | "Retail" | 1081934227         |
@@ -240,6 +248,7 @@ FROM MONTHLY_SALES
 GROUP BY 1, 2
 ORDER BY 1, 2
 ```
+Answer:
 | calendar_year | month_number | retail_percentage | shopify_percentage |
 |---------------|--------------|-------------------|---------------------|
 | 2018          | 3            | 97.92             | 2.08                |
@@ -295,6 +304,7 @@ SELECT CALENDAR_YEAR,
 	GROUP BY 1
 	ORDER BY 1
 ```
+Answer:
 | calendar_year | unknown_percentage | families_percentage | couples_percentage |
 |---------------|--------------------|---------------------|--------------------|
 | 2018          | 41.63              | 31.99               | 26.38              |
@@ -322,6 +332,7 @@ FROM RETAIL
 ORDER BY 3 DESC
 LIMIT 1
 ```
+Answer:
 | age_band | demographic | retail_proportion |
 |----------|------------|-------------------|
 | "Retirees" | "Families" | 16.3             |
@@ -352,6 +363,7 @@ SELECT *
 FROM GROUP_WISE
 INNER JOIN ROW_WISE USING (PLATFORM, CALENDAR_YEAR)
 ```
+Answer:
 | platform | calendar_year | avg_transaction_by_group | avg_transaction_by_row |
 |----------|---------------|--------------------------|------------------------|
 | "Shopify" | 2018          | 192                      | 188                    |
@@ -399,6 +411,7 @@ WITH BASELINE AS
 SELECT *
 FROM CHANGE_IN_SALES
 ```
+Answer:
 | after_sales | before_sales | abs_diff | perc_change |
 |-------------|--------------|----------|-------------|
 | 2334905223  | 2345878357   | -10973134| -0.47       |
@@ -435,6 +448,7 @@ WITH BASELINE AS
 SELECT *
 FROM CHANGE_IN_SALES
 ```
+Answer:
 | after_sales | before_sales | abs_diff | perc_change |
 |-------------|--------------|----------|-------------|
 | 6403922405  | 7126273147   | -722350742| -10.14      |
@@ -564,6 +578,7 @@ UNION
 FROM CHANGE_IN_SALES_2020)
 ORDER BY YEAR
 ```
+Answer:
 | year | after_sales_4weeks | before_sales_4weeks | after_sales_12weeks | before_sales_12weeks | abs_diff_4weeks | abs_diff_12weeks | perc_change_4weeks | perc_change_12weeks |
 |------|--------------------|---------------------|---------------------|----------------------|------------------|-------------------|--------------------|---------------------|
 | 2018 | 2145961036         | 2125140809          | 5976449777          | 6396562317           | 20820227         | -420112540        | 0.98               | -6.57               |

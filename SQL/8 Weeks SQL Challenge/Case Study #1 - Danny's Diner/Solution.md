@@ -17,7 +17,7 @@ FROM combined
 GROUP BY 1
 ORDER BY 2 DESC
 ````
-#### Answer:
+Answer:
 | customer_id | total_spent |
 | ----------- | ----------- |
 | A           | 76          |
@@ -33,7 +33,7 @@ SELECT customer_id, COUNT(DISTINCT order_date) AS n_vists
 FROM dannys_diner.sales
 GROUP BY 1
 ````
-#### Answer:
+Answer:
 | customer_id | n_vists |
 | ----------- | ----------- |
 | A           | 4          |
@@ -57,7 +57,7 @@ FROM
 	FROM combined) a
 WHERE rnk = 1
 ````
-#### Answer:
+Answer:
 | customer_id | first_item_purchased | 
 | ----------- | ----------- |
 | A           | curry        | 
@@ -82,7 +82,7 @@ GROUP BY 1
 ORDER BY 2 DESC
 LIMIT 1
 ````
-#### Answer:
+Answer:
 | product_name | n_times | 
 | ----------- | ----------- |
 | ramen      | 8 |
@@ -112,7 +112,7 @@ ranked AS (
 SELECT * FROM ranked
 WHERE rnk = 1
 ````
-#### Answer:
+Answer:
 | customer_id | product_name | n_times |
 | ----------- | ---------- |------------  |
 | A           | ramen        |  3   |
@@ -143,7 +143,7 @@ SELECT customer_id, product_name
 FROM ranked
 WHERE row_num = 1
 ```
-#### Answer:
+Answer:
 | customer_id | product_name |
 | ----------- | ---------- |
 | A           | ramen        |
@@ -171,7 +171,7 @@ SELECT customer_id, product_name
 FROM ranked
 WHERE row_num = 1
 ````
-#### Answer:
+Answer:
 | customer_id | product_name |
 | ----------- | ---------- |
 | A           | sushi        |
@@ -194,7 +194,7 @@ SELECT customer_id, COUNT(*) AS n_times, SUM(price) AS total_spent
 FROM before_member
 GROUP BY 1
 ```
-#### Answer:
+Answer:
 | customer_id | total_items | total_sales |
 | ----------- | ---------- |----------  |
 | B           | 3 |  40       |
@@ -228,7 +228,7 @@ FROM points
 GROUP BY 1
 ORDER BY 2 DESC
 ```
-#### Answer:
+Answer:
 | customer_id | total_points | 
 | ----------- | ---------- |
 | B           | 940 |
@@ -271,7 +271,7 @@ FROM spending
 GROUP BY 1
 ORDER BY 2 DESC
 ```
-#### Answer:
+Answer:
 | customer_id | total_points | 
 | ----------- | ---------- |
 | A           | 720 |
@@ -300,7 +300,7 @@ SELECT
 FROM combined
 ORDER BY 1,2,3,4
 ```
-#### Answer: 
+Answer: 
 | customer_id | order_date | product_name | price | member |
 | ----------- | ---------- | -------------| ----- | ------ |
 | A           | 2021-01-01 | sushi        | 10    | N      |
@@ -352,7 +352,7 @@ SELECT
 	END AS ranking
 FROM complete
 ```
-#### Answer: 
+Answer: 
 | customer_id | order_date | product_name | price | member | ranking | 
 | ----------- | ---------- | -------------| ----- | ------ |-------- |
 | A           | 2021-01-01 | sushi        | 10    | N      | NULL

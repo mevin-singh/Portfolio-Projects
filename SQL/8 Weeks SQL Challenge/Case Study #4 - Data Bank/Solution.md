@@ -11,6 +11,7 @@ All the information regarding the case study has been sourced from the following
 SELECT COUNT(DISTINCT node_id)
 FROM data_bank.customer_nodes;
 ```
+Answer:
 |count|
 |----|
 |5|
@@ -30,6 +31,7 @@ SELECT REGION_NAME,
 FROM COMBINED
 GROUP BY 1
 ```
+Answer:
 | region_name | n_nodes |
 |-------------|---------|
 | "America"   | 735     |
@@ -53,6 +55,7 @@ SELECT REGION_NAME,
 FROM COMBINED
 GROUP BY 1
 ```
+Answer:
 | region_name | n_customers |
 |-------------|-------------|
 | "Africa"    | 102         |
@@ -86,6 +89,7 @@ WITH NODE_DAYS AS
 SELECT ROUND(AVG(N_DAYS), 0) AS AVERAGE_DAYS
 FROM TOTAL_NODE_DAYS
 ```
+Answer:
 | average_days |
 |--------------|
 | 24           |
@@ -117,6 +121,7 @@ SELECT REGION_NAME,
 FROM NODE_DAYS
 GROUP BY 1;
 ```
+Answer:
 | region_name | median | percentile_80 | percentile_90 |
 |-------------|--------|---------------|---------------|
 | "Africa"    | 15     | 24            | 26            |
@@ -137,6 +142,7 @@ SELECT TXN_TYPE,
 FROM DATA_BANK.CUSTOMER_TRANSACTIONS
 GROUP BY 1
 ```
+Answer:
 | txn_type  | unique_count | total_txn_amount |
 |-----------|--------------|------------------|
 | "deposit" | 500          | 1359168          |
@@ -159,6 +165,7 @@ SELECT ROUND(AVG(DEPOSIT_COUNT), 0) AS AVG_DEPOSIT_COUNT,
 	ROUND(AVG(DEPOSIT_AMOUNT), 2) AS AVG_DEPOSIT_AMOUNT
 FROM DEPOSIT_COUNTS_AMOUNT
 ```
+Answer:
 | avg_deposit_count | avg_deposit_amount |
 |------------------|-------------------|
 | 5                | 2718.34           |
@@ -202,6 +209,7 @@ SELECT MONTH,
 FROM FILTERED
 GROUP BY 1
 ```
+Answer:
 | month | n_count |
 |-------|---------|
 | 1     | 115     |
@@ -261,6 +269,7 @@ SELECT CUSTOMER_ID,
 						ORDER BY MONTH RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS ENDING_BALANCE
 FROM COMBINED
 ```
+Answer:
 For the first 15 rows:
 | customer_id | month | ending_balance |
 |-------------|-------|----------------|
@@ -334,6 +343,7 @@ SELECT ROUND(CAST(COUNT(*) AS numeric) / CAST((SELECT COUNT (DISTINCT CUSTOMER_I
 FROM PERCENT_CHANGE
 WHERE PERC_CHANGE >= 5
 ```
+Answer:
 | proportion   |
 |--------------|
 | 44.20        |
