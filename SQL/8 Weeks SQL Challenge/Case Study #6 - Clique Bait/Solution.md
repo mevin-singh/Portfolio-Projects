@@ -471,8 +471,64 @@ Generate a table that has 1 single row for every unique visit_id record and has 
 - impression: count of ad impressions for each visit
 - click: count of ad clicks for each visit
 - (Optional column) cart_products: a comma separated text value with products added to the cart sorted by the order they were added to the cart (hint: use the sequence_number)
-U
-se the subsequent dataset to generate at least 5 insights for the Clique Bait team - bonus: prepare a single A4 infographic that the team can use for their management reporting sessions, be sure to emphasise the most important points from your findings.
+
+```sql
+WITH COMBINED AS
+	(SELECT *
+		FROM CLIQUE_BAIT.EVENTS AS E
+		INNER JOIN CLIQUE_BAIT.EVENT_IDENTIFIER USING (EVENT_TYPE)
+		INNER JOIN CLIQUE_BAIT.USERS USING (COOKIE_ID)
+		LEFT JOIN CLIQUE_BAIT.CAMPAIGN_IDENTIFIER AS CI ON E.EVENT_TIME BETWEEN CI.START_DATE AND CI.END_DATE
+		LEFT JOIN CLIQUE_BAIT.PAGE_HIERARCHY USING (PAGE_ID))
+		
+SELECT USER_ID,
+	VISIT_ID,
+	MIN(EVENT_TIME) AS VISIT_START_TIME,
+	CAST(SUM(CASE
+				WHEN EVENT_NAME = 'Page View' THEN 1
+				ELSE 0
+				END) AS numeric) AS PAGE_VIEWS,
+				
+	CAST(SUM(CASE
+				WHEN EVENT_NAME = 'Add to Cart' THEN 1
+				ELSE 0
+				END) AS numeric) AS CART_ADDS,
+				
+	CAST(SUM(CASE
+				WHEN EVENT_NAME = 'Ad Click' THEN 1
+				ELSE 0
+				END) AS numeric)AS PURCHASE,
+	CAMPAIGN_NAME,
+	CAST(SUM(CASE
+				WHEN EVENT_NAME = 'Ad Impression' THEN 1
+				ELSE 0
+				END) AS numeric) AS IMPRESSION,
+				
+	CAST(SUM(CASE
+				WHEN EVENT_NAME = 'Ad Click' THEN 1
+				ELSE 0
+				END) AS numeric) AS CLICK,
+	STRING_AGG(CASE
+					WHEN PRODUCT_ID IS NOT NULL AND EVENT_NAME = 'Add to Cart' THEN PAGE_NAME
+					ELSE NULL
+					END, ', ' ORDER BY SEQUENCE_NUMBER) AS CART_PRODUCTS
+FROM COMBINED
+GROUP BY USER_ID,
+	VISIT_ID,
+	CAMPAIGN_NAME
+```
+Answer:
+First 5 rows:
+| user_id | visit_id | visit_start_time       | page_views | cart_adds | purchase | campaign_name                    | impression | click | cart_products                                              |
+| ------- | -------- | ----------------------- | ---------- | --------- | -------- | -------------------------------- | ---------- | ----- | ----------------------------------------------------------- |
+| 1       | "02a5d5" | 2020-02-26 16:57:26.260 | 4          | 0         | 0        | "Half Off - Treat Your Shellf(ish)" | 0          | 0     |                                                             |
+| 1       | "0826dc" | 2020-02-26 05:58:37.918 | 1          | 0         | 0        | "Half Off - Treat Your Shellf(ish)" | 0          | 0     |                                                             |
+| 1       | "0fc437" | 2020-02-04 17:49:49.602 | 10         | 6         | 1        | "Half Off - Treat Your Shellf(ish)" | 1          | 1     | "Tuna, Russian Caviar, Black Truffle, Abalone, Crab, Oyster" |
+| 1       | "30b94d" | 2020-03-15 13:12:54.023 | 9          | 7         | 1        | "Half Off - Treat Your Shellf(ish)" | 1          | 1     | "Salmon, Kingfish, Tuna, Russian Caviar, Abalone, Lobster, Crab" |
+| 1       | "41355d" | 2020-03-25 00:11:17.860 | 6          | 1         | 0        | "Half Off - Treat Your Shellf(ish)" | 0          | 0     | "Lobster"                                                   |
+
+
+Use the subsequent dataset to generate at least 5 insights for the Clique Bait team - bonus: prepare a single A4 infographic that the team can use for their management reporting sessions, be sure to emphasise the most important points from your findings.
 
 Some ideas you might want to investigate further include:
 
