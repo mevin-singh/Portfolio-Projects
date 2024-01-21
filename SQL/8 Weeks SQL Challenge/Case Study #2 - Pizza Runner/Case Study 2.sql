@@ -3,89 +3,96 @@
 */
 
 -- Cleaning runner_orders
-CREATE OR REPLACE VIEW runner_orders_cleaned AS (
-	SELECT 
-		order_id,
-		runner_id,
-		CASE
-			WHEN pickup_time = 'null' THEN NULL
-			ELSE CAST(pickup_time AS TIMESTAMP)
-		END AS pickup_time,
-		CASE
-			WHEN distance = 'null' THEN NULL
-			ELSE CAST(REPLACE(TRIM(distance), 'km', '') AS NUMERIC)
-		END AS distance,
-		CASE
-			WHEN duration = 'null' THEN NULL
-			ELSE CAST(SUBSTRING(duration, '[0-9]+') AS NUMERIC)
-		END AS duration_mins,
-		-- assuming null or empty string means not cancelled
-		CASE 
-			WHEN cancellation IN ('', 'null') OR cancellation IS NULL THEN 0
-			ELSE 1
-		END AS cancellation
-	FROM pizza_runner.runner_orders
-)
+CREATE OR REPLACE VIEW RUNNER_ORDERS_CLEANED AS
+	(SELECT ORDER_ID,
+			RUNNER_ID,
+			CASE
+				WHEN PICKUP_TIME = 'null' THEN NULL
+				ELSE CAST(PICKUP_TIME AS TIMESTAMP)
+			END AS PICKUP_TIME,
+	 
+			CASE
+				WHEN DISTANCE = 'null' THEN NULL
+				ELSE CAST(REPLACE(TRIM(DISTANCE), 'km', '') AS NUMERIC)
+			END AS DISTANCE,
+	 
+			CASE
+				WHEN DURATION = 'null' THEN NULL
+				ELSE CAST(SUBSTRING(DURATION, '[0-9]+') AS NUMERIC)
+			END AS DURATION_MINS, -- assuming null or empty string means cancelled
+	 
+			CASE 
+				WHEN CANCELLATION IN ('', 'null') OR CANCELLATION IS NULL THEN 0
+				ELSE 1
+				END AS CANCELLATION
+		FROM PIZZA_RUNNER.RUNNER_ORDERS)
 
 
 -- Cleaning customer_orders
-CREATE OR REPLACE VIEW customer_orders_cleaned AS (
-	WITH customer_orders AS (
-	SELECT 
-		order_id,
-		customer_id,
-		pizza_id,
-		-- adding a 'null' to where appropriate - to be replaced later
-		-- if not added, nulls would be removed when unnesting in the next cte
-		CASE WHEN exclusions IN ('') THEN 'null' ELSE exclusions END AS exclusions,
-		CASE WHEN extras = '' OR extras IS NULL THEN 'null' ELSE extras END AS extras,
-		order_time
-	FROM pizza_runner.customer_orders
-),
+CREATE OR REPLACE VIEW CUSTOMER_ORDERS_CLEANED AS ( WITH CUSTOMER_ORDERS AS
+	(SELECT ORDER_ID,
+			CUSTOMER_ID,
+			PIZZA_ID, 
+	 -- adding a 'null' to where appropriate - to be replaced later
+ 	 -- if not added, nulls would be removed when unnesting in the next cte
+			CASE
+				WHEN EXCLUSIONS IN ('') THEN 'null'
+				ELSE EXCLUSIONS
+				END AS EXCLUSIONS,
+	 
+			CASE
+				WHEN EXTRAS = '' OR EXTRAS IS NULL THEN 'null'
+				ELSE EXTRAS
+				END AS EXTRAS,
+	 
+			ORDER_TIME
+		FROM PIZZA_RUNNER.CUSTOMER_ORDERS),
 
-customer_orders_intermediate AS (
-	SELECT
-		order_id,
-		customer_id,
-		pizza_id,
-		-- string_to_array then unnest to remove comma into a new row
-		UNNEST(STRING_TO_ARRAY(exclusions, ', ')) AS exclusions,
-		UNNEST(STRING_TO_ARRAY(extras, ', ')) AS extras,
-		order_time,
-		EXTRACT(hour FROM order_time) AS order_hour,
-		TO_CHAR(order_time, 'Day') AS day_of_week
-	FROM customer_orders
+CUSTOMER_ORDERS_INTERMEDIATE AS (
+SELECT ORDER_ID,
+	CUSTOMER_ID,
+	PIZZA_ID, 
+	-- string_to_array then unnest to remove comma into a new row
+ 	UNNEST(STRING_TO_ARRAY(EXCLUSIONS, ', ')) AS EXCLUSIONS,
+	UNNEST(STRING_TO_ARRAY(EXTRAS, ', ')) AS EXTRAS,
+	ORDER_TIME,
+	EXTRACT(HOUR FROM ORDER_TIME) AS ORDER_HOUR,
+	TO_CHAR(ORDER_TIME, 'Day') AS DAY_OF_WEEK
+FROM CUSTOMER_ORDERS
 )
 
-	SELECT
-		order_id,
-		customer_id,
-		pizza_id,
-		CAST(CASE WHEN exclusions = 'null' THEN NULL ELSE exclusions END AS NUMERIC) AS exclusions,
-		CAST(CASE WHEN extras = 'null' THEN NULL ELSE extras END AS NUMERIC) AS extras,
-		order_time,
-		order_hour,
-		day_of_week
-	FROM customer_orders_intermediate
+	SELECT ORDER_ID,
+	CUSTOMER_ID,
+	PIZZA_ID,
+												   
+	CAST(CASE
+		WHEN EXCLUSIONS = 'null' THEN NULL
+		ELSE EXCLUSIONS
+		END AS NUMERIC) AS EXCLUSIONS,
+												   
+	CAST(CASE
+		WHEN EXTRAS = 'null' THEN NULL
+		ELSE EXTRAS
+		END AS NUMERIC) AS EXTRAS,
+	ORDER_TIME,
+	ORDER_HOUR,
+	DAY_OF_WEEK
+FROM CUSTOMER_ORDERS_INTERMEDIATE
 )
 
 -- Cleaning pizza_toppings
-CREATE OR REPLACE VIEW pizza_toppings_cleaned AS (
-	WITH pizza_recipe AS (
-		SELECT
-		pizza_id,
-		CAST(UNNEST(STRING_TO_ARRAY(toppings, ', ')) AS NUMERIC) AS topping_id
-	FROM pizza_runner.pizza_recipes
-	)
-	
-	SELECT 
-		pizza_id,
-		topping_id,
-		topping_name
-	FROM pizza_recipe
-	INNER JOIN pizza_runner.pizza_toppings USING (topping_id)
-	ORDER BY pizza_id, topping_id
-)
+CREATE OR REPLACE VIEW PIZZA_TOPPINGS_CLEANED AS
+	(WITH PIZZA_RECIPE AS
+			(SELECT PIZZA_ID,
+					CAST(UNNEST(STRING_TO_ARRAY(TOPPINGS, ', ')) AS NUMERIC) AS TOPPING_ID
+				FROM PIZZA_RUNNER.PIZZA_RECIPES) 
+	 
+SELECT PIZZA_ID,
+	TOPPING_ID,
+	TOPPING_NAME
+FROM PIZZA_RECIPE
+INNER JOIN PIZZA_RUNNER.PIZZA_TOPPINGS USING (TOPPING_ID)
+ORDER BY PIZZA_ID, TOPPING_ID)
 
 
 -- 1. How many pizzas were ordered?
@@ -94,116 +101,118 @@ FROM pizza_runner.customer_orders
 
 
 -- 2. How many unique customer orders were made?
-SELECT customer_id,
-	COUNT(DISTINCT order_id) AS unique_customer_orders
-FROM pizza_runner.customer_orders
+SELECT CUSTOMER_ID,
+	COUNT(DISTINCT ORDER_ID) AS UNIQUE_CUSTOMERS
+FROM PIZZA_RUNNER.CUSTOMER_ORDERS
 GROUP BY 1
 
 -- 3. How many successful orders were delivered by each runner?
-SELECT RUNNER_ID, COUNT(*) AS N_SUCCESSFUL
+SELECT RUNNER_ID,
+	COUNT(*) AS N_SUCCESSFUL
 FROM RUNNER_ORDERS_CLEANED
 WHERE CANCELLATION = 0
 GROUP BY 1
 
 
 -- 4. How many of each type of pizza was delivered?
-WITH combined AS (
-	SELECT * 
-	FROM pizza_runner.customer_orders
-	INNER JOIN pizza_runner.pizza_names USING (pizza_id)
-	INNER JOIN runner_orders_cleaned USING (order_id)
-	WHERE cancellation = 0
-)
-
-SELECT 
-	PIZZA_NAME, 
-	COUNT(*) AS n_pizzas 
-FROM combined
+WITH COMBINED AS
+	(SELECT *
+		FROM PIZZA_RUNNER.CUSTOMER_ORDERS
+		INNER JOIN PIZZA_RUNNER.PIZZA_NAMES USING (PIZZA_ID)
+		INNER JOIN RUNNER_ORDERS_CLEANED USING (ORDER_ID)
+		WHERE CANCELLATION = 0 )
+		
+SELECT PIZZA_NAME,
+	COUNT(*) AS N_PIZZAS
+FROM COMBINED
 GROUP BY 1
 ORDER BY 1, 2
 
 
 -- 5. How many Vegetarian and Meatlovers were ordered by each customer?
-WITH combined AS (
-	SELECT * 
-	FROM pizza_runner.customer_orders
-	LEFT JOIN pizza_runner.pizza_names USING (pizza_id)
-	LEFT JOIN runner_orders_cleaned USING (order_id)
-	WHERE cancellation = 0
-)
-
-SELECT 
- 	customer_id, 
- 	SUM(CASE WHEN pizza_name = 'Meatlovers' THEN 1 ELSE 0 END) AS n_meatlovers,
- 	SUM(CASE WHEN pizza_name = 'Vegetarian' THEN 1 ELSE 0 END) AS n_vegetarian
-FROM combined
+WITH COMBINED AS
+	(SELECT *
+		FROM PIZZA_RUNNER.CUSTOMER_ORDERS
+		LEFT JOIN PIZZA_RUNNER.PIZZA_NAMES USING (PIZZA_ID)
+		LEFT JOIN RUNNER_ORDERS_CLEANED USING (ORDER_ID)
+		WHERE CANCELLATION = 0 )
+		
+SELECT CUSTOMER_ID,
+	SUM(CASE WHEN PIZZA_NAME = 'Meatlovers' THEN 1
+		ELSE 0
+		END) AS N_MEATLOVERS,
+		
+	SUM(CASE
+		WHEN PIZZA_NAME = 'Vegetarian' THEN 1
+		ELSE 0
+		END) AS N_VEGETARIAN
+FROM COMBINED
 GROUP BY 1
 ORDER BY 1
 
 
 -- 6. What was the maximum number of pizzas delivered in a single order?
-WITH combined AS (
-	SELECT * 
-	FROM pizza_runner.customer_orders
-	INNER JOIN runner_orders_cleaned USING (order_id)
-	WHERE cancellation = 0
-)
-
-SELECT 
-	order_id,
-	COUNT(*) AS n_pizzas
-FROM combined
+WITH COMBINED AS
+	(SELECT *
+		FROM PIZZA_RUNNER.CUSTOMER_ORDERS
+		INNER JOIN RUNNER_ORDERS_CLEANED USING (ORDER_ID)
+		WHERE CANCELLATION = 0 )
+		
+SELECT ORDER_ID,
+	COUNT(*) AS N_PIZZAS
+FROM COMBINED
 GROUP BY 1
 ORDER BY 2 DESC
 LIMIT 1
 
-
 -- 7. For each customer, how many delivered pizzas had at least 1 change and how many had no changes?
-WITH combined AS (
-	SELECT *
-	FROM customer_orders_cleaned
-	INNER JOIN runner_orders_cleaned USING (order_id)
-	WHERE cancellation = 0
-)
-
-SELECT 
-	customer_id,
-	SUM(CASE WHEN exclusions IS NOT NULL OR extras IS NOT NULL THEN 1 ELSE 0 END) AS n_at_least_1_change,
-	SUM(CASE WHEN exclusions IS NULL AND extras IS NULL THEN 1 ELSE 0 END) AS n_no_change 
-FROM combined
+WITH COMBINED AS
+	(SELECT *
+		FROM CUSTOMER_ORDERS_CLEANED
+		INNER JOIN RUNNER_ORDERS_CLEANED USING (ORDER_ID)
+		WHERE CANCELLATION = 0 )
+		
+SELECT CUSTOMER_ID,
+	SUM(CASE
+		WHEN EXCLUSIONS IS NOT NULL OR EXTRAS IS NOT NULL THEN 1
+		ELSE 0
+		END) AS N_AT_LEAST_1_CHANGE,
+			
+	SUM(CASE
+		WHEN EXCLUSIONS IS NULL AND EXTRAS IS NULL THEN 1
+		ELSE 0
+		END) AS N_NO_CHANGE
+			
+FROM COMBINED
 GROUP BY 1
 ORDER BY 1
 
 -- 8. How many pizzas were delivered that had both exclusions and extras?
-WITH combined AS (
-	SELECT 
-		*
-	FROM customer_orders_cleaned
-	INNER JOIN runner_orders_cleaned USING (order_id)
-	WHERE cancellation = 0
-)
-
-SELECT 
-	COUNT(*)
-FROM combined
-WHERE exclusions IS NOT NULL AND extras IS NOT NULL 
+WITH COMBINED AS
+	(SELECT *
+		FROM CUSTOMER_ORDERS_CLEANED
+		INNER JOIN RUNNER_ORDERS_CLEANED USING (ORDER_ID)
+		WHERE CANCELLATION = 0 )
+		
+SELECT COUNT(DISTINCT ORDER_ID) AS N_PIZZAS
+FROM COMBINED
+WHERE EXCLUSIONS IS NOT NULL
+	AND EXTRAS IS NOT NULL
 
 
 -- 9. What was the total volume of pizzas ordered for each hour of the day?
-SELECT 
-	order_hour,
-	COUNT(*) AS n_orders
-FROM customer_orders_cleaned
-GROUP BY 1 
+SELECT ORDER_HOUR,
+	COUNT(*) AS N_ORDERS
+FROM CUSTOMER_ORDERS_CLEANED
+GROUP BY 1
 ORDER BY 1
 
 
 -- 10. What was the volume of orders for each day of the week?
-SELECT 
-	day_of_week,
-	COUNT(*) AS n_orders
-FROM customer_orders_cleaned
-GROUP BY 1 
+SELECT DAY_OF_WEEK,
+	COUNT(*) AS N_ORDERS
+FROM CUSTOMER_ORDERS_CLEANED
+GROUP BY 1
 ORDER BY 1
 
 /* 
@@ -211,151 +220,130 @@ ORDER BY 1
 */
 
 -- 1. How many runners signed up for each 1 week period? (i.e. week starts 2021-01-01)
-WITH week_nums AS (
-	SELECT 
-		*,
-		CASE
-			-- '2021-01-01' is the starting week so change to 0
-			WHEN DATE_PART('week', registration_date) = 53 THEN 0 
-			ELSE DATE_PART('week', registration_date)
-		END AS week_num
-	FROM pizza_runner.runners
-)
-
-SELECT 
-	week_num,
-	COUNT(runner_id) AS n_runners
-FROM week_nums
+WITH WEEK_NUMS AS
+	(SELECT *,
+		CASE 
+		-- '2021-01-01' is the starting week so change to 1
+	 		WHEN DATE_PART('week', REGISTRATION_DATE) = 53 THEN 1
+			ELSE DATE_PART('week', REGISTRATION_DATE) + 1
+			END AS WEEK_NUM
+		FROM PIZZA_RUNNER.RUNNERS)
+		
+SELECT WEEK_NUM,
+	COUNT(RUNNER_ID) AS N_RUNNERS
+FROM WEEK_NUMS
 GROUP BY 1
 ORDER BY 1
 
 
 -- 2. What was the average time in minutes it took for each runner to arrive at the Pizza Runner HQ to pickup the order?
-WITH combined AS (
-	SELECT 
-		runner_id,
-		order_id,
-		order_time,
-		pickup_time
-	FROM customer_orders_cleaned
-	INNER JOIN runner_orders_cleaned USING (order_id)
-	WHERE cancellation = 0
-),
-
-arrival_times AS (
-	SELECT
-		runner_id,
-		order_id,
-		EXTRACT(MINUTE FROM (pickup_time - order_time)) + EXTRACT(SECOND FROM (pickup_time - order_time))/60  AS time_to_arrive
-	FROM combined
-	WHERE pickup_time - order_time IS NOT NULL
-)
-
-SELECT
-	runner_id,
-	ROUND(AVG(time_to_arrive), 2) AS avg_time_to_arrive
-FROM arrival_times
+WITH COMBINED AS
+	(SELECT RUNNER_ID,
+			ORDER_ID,
+			ORDER_TIME,
+			PICKUP_TIME
+		FROM CUSTOMER_ORDERS_CLEANED
+		INNER JOIN RUNNER_ORDERS_CLEANED USING (ORDER_ID)
+		WHERE CANCELLATION = 0 ),
+		
+	ARRIVAL_TIMES AS
+	(SELECT RUNNER_ID,
+			ORDER_ID,
+			EXTRACT(MINUTE FROM (PICKUP_TIME - ORDER_TIME)) 
+	 			+ EXTRACT(SECOND FROM (PICKUP_TIME - ORDER_TIME)) / 60 AS TIME_TO_ARRIVE
+		FROM COMBINED
+		WHERE PICKUP_TIME - ORDER_TIME IS NOT NULL )
+		
+SELECT RUNNER_ID,
+	ROUND(AVG(TIME_TO_ARRIVE), 2) AS AVG_TIME_TO_ARRIVE
+FROM ARRIVAL_TIMES
 GROUP BY 1
 ORDER BY 1
 
 -- 3. Is there any relationship between the number of pizzas and how long the order takes to prepare?
-WITH combined AS (
-	SELECT 
-		runner_id,
-		order_id,
-		order_time,
-		pickup_time
-	FROM customer_orders_cleaned
-	INNER JOIN runner_orders_cleaned USING (order_id)
-	WHERE cancellation = 0
-),
-
-arrival_times AS (
-	SELECT
-		order_id,
-		EXTRACT(MINUTE FROM (pickup_time - order_time)) + EXTRACT(SECOND FROM (pickup_time - order_time))/60  AS prep_time_mins
-	FROM combined
-	WHERE pickup_time - order_time IS NOT NULL
-),
-
-num_pizzas AS (
-	SELECT 
-		COUNT(order_id) AS num_pizza,
-		SUM(prep_time_mins) AS total_prep_time_mins
-	FROM arrival_times
-	GROUP BY order_id
-)
-
-SELECT 
-	num_pizza,
-	ROUND(AVG(total_prep_time_mins), 2) AS avg_prep_time_mins
-FROM num_pizzas
-GROUP BY 1 
-ORDER BY 1
-
-
--- 4. What was the average distance travelled for each customer?
-WITH combined AS (
-	SELECT 
-		customer_id,
-		distance
-	FROM customer_orders_cleaned
-	INNER JOIN runner_orders_cleaned USING (order_id)
-	WHERE cancellation = 0
-)
-
-SELECT 
-	customer_id,
-	ROUND(AVG(distance), 2) AS avg_dist
-FROM combined
+WITH COMBINED AS
+	(SELECT RUNNER_ID,
+			ORDER_ID,
+			ORDER_TIME,
+			PICKUP_TIME
+		FROM CUSTOMER_ORDERS_CLEANED
+		INNER JOIN RUNNER_ORDERS_CLEANED USING (ORDER_ID)
+		WHERE CANCELLATION = 0 ),
+		
+	ARRIVAL_TIMES AS
+	(SELECT ORDER_ID,
+			EXTRACT(MINUTE FROM (PICKUP_TIME - ORDER_TIME)) 
+	 			+ EXTRACT(SECOND FROM (PICKUP_TIME - ORDER_TIME)) / 60 AS PREP_TIME_MINS
+		FROM COMBINED
+		WHERE PICKUP_TIME - ORDER_TIME IS NOT NULL ),
+		
+	NUM_PIZZAS AS
+	(SELECT COUNT(ORDER_ID) AS NUM_PIZZA,
+			SUM(PREP_TIME_MINS) AS TOTAL_PREP_TIME_MINS
+		FROM ARRIVAL_TIMES
+		GROUP BY ORDER_ID)
+		
+SELECT NUM_PIZZA,
+	ROUND(AVG(TOTAL_PREP_TIME_MINS),
+		2) AS AVG_PREP_TIME_MINS
+FROM NUM_PIZZAS
 GROUP BY 1
 ORDER BY 1
 
+-- 4. What was the average distance travelled for each customer?
+WITH COMBINED AS
+	(SELECT CUSTOMER_ID,
+			DISTANCE
+		FROM CUSTOMER_ORDERS_CLEANED
+		INNER JOIN RUNNER_ORDERS_CLEANED USING (ORDER_ID)
+		WHERE CANCELLATION = 0 )
+		
+SELECT CUSTOMER_ID,
+	ROUND(AVG(DISTANCE), 2) AS AVG_DIST
+FROM COMBINED
+GROUP BY 1
+ORDER BY 1
 
 -- 5. What was the difference between the longest and shortest delivery times for all orders?
-WITH combined AS (
-	SELECT 
-		DISTINCT order_id,
-		duration_mins
-	FROM customer_orders_cleaned
-	INNER JOIN runner_orders_cleaned USING (order_id)
-	WHERE cancellation = 0
-)
-
-SELECT 
-	MAX(duration_mins) AS longest_delivery_mins,
-	MIN(duration_mins) AS shortest_delivery_mins,
-	MAX(duration_mins) - MIN(duration_mins) AS difference_mins
-FROM combined
+WITH COMBINED AS
+	(SELECT DISTINCT ORDER_ID,
+			DURATION_MINS
+		FROM CUSTOMER_ORDERS_CLEANED
+		INNER JOIN RUNNER_ORDERS_CLEANED USING (ORDER_ID)
+		WHERE CANCELLATION = 0 )
+		
+SELECT MAX(DURATION_MINS) AS LONGEST_DELIVERY_MINS,
+	MIN(DURATION_MINS) AS SHORTEST_DELIVERY_MINS,
+	MAX(DURATION_MINS) - MIN(DURATION_MINS) AS DIFFERENCE_MINS
+FROM COMBINED
 
 
 -- 6. What was the average speed for each runner for each delivery and do you notice any trend for these values?
-WITH combined AS (
-	SELECT 
-		runner_id,
-		distance,
-		duration_mins/60 AS duration_hrs
-	FROM customer_orders_cleaned
-	INNER JOIN runner_orders_cleaned USING (order_id)
-	-- order is only delivering then there is no cancellation
-	WHERE cancellation = 0
-)
+WITH COMBINED AS
+	(SELECT ORDER_ID,
+			RUNNER_ID,
+			DISTANCE,
+			DURATION_MINS / 60 AS DURATION_HRS
+		FROM CUSTOMER_ORDERS_CLEANED
+		INNER JOIN RUNNER_ORDERS_CLEANED USING (ORDER_ID) -- order is only delivering then there is no cancellation
 
-SELECT 
-	runner_id,
+		WHERE CANCELLATION = 0 )
+SELECT DISTINCT ORDER_ID,
+	RUNNER_ID, 
 	-- average speed since total distance/total time and not avg aggregation function
-	ROUND(distance/duration_hrs, 2) AS avg_speed_kmph
-FROM combined
+ ROUND(DISTANCE / DURATION_HRS, 2) AS AVG_SPEED_KMPH
+FROM COMBINED
 
 
 -- 7. What is the successful delivery percentage for each runner?
 SELECT 
-	runner_id,
-	SUM(CASE WHEN cancellation = 0 THEN 1 ELSE 0 END) AS succesful_orders,
-	COUNT(*) AS n_orders,
-	ROUND(CAST(SUM(CASE WHEN cancellation = 0 THEN 1 ELSE 0 END) AS NUMERIC)/CAST(COUNT(*) AS NUMERIC) * 100, 2) AS success_perc
-FROM runner_orders_cleaned
+	RUNNER_ID,
+	SUM(CASE WHEN CANCELLATION = 0 THEN 1 ELSE 0 END) AS SUCCESFUL_ORDERS,
+	COUNT(*) AS N_ORDERS,
+	ROUND(CAST(SUM(CASE WHEN CANCELLATION = 0 THEN 1 ELSE 0 END) AS NUMERIC)/CAST(COUNT(*) AS NUMERIC) * 100, 2) AS SUCCESS_PERC
+FROM RUNNER_ORDERS_CLEANED
 GROUP BY 1
+ORDER BY 1
 
 /*
 	C: Ingredient Optimisation
@@ -367,90 +355,80 @@ FROM pizza_toppings_cleaned
 
 
 -- 2. What was the most commonly added extra?
-WITH most_common_extra AS (
-	SELECT 
-		extras,
-		COUNT(*) AS n_times
-	FROM customer_orders_cleaned
-	WHERE extras IS NOT NULL
-	GROUP BY 1
-)
-
-SELECT
-	DISTINCT
-	extras,
-	topping_name,
-	n_times
-FROM most_common_extra AS a
-INNER JOIN pizza_toppings_cleaned AS b
-ON a.extras = b.topping_id
-ORDER BY n_times DESC
+WITH MOST_COMMON_EXTRA AS
+	(SELECT EXTRAS,
+			COUNT(*) AS N_TIMES
+		FROM CUSTOMER_ORDERS_CLEANED
+		WHERE EXTRAS IS NOT NULL
+		GROUP BY 1)
+		
+SELECT DISTINCT TOPPING_NAME,
+	N_TIMES
+FROM MOST_COMMON_EXTRA AS A
+INNER JOIN PIZZA_TOPPINGS_CLEANED AS B ON A.EXTRAS = B.TOPPING_ID
+ORDER BY N_TIMES DESC
 LIMIT 1
 
 
 -- 3. What was the most common exclusion?
-WITH most_common_exclusion AS (
-	SELECT 
-		exclusions,
-		COUNT(*) AS n_times
-	FROM customer_orders_cleaned
-	WHERE exclusions IS NOT NULL
-	GROUP BY 1
-)
-
-SELECT
-	DISTINCT
-	exclusions,
-	topping_name,
-	n_times
-FROM most_common_exclusion AS a
-INNER JOIN pizza_toppings_cleaned AS b
-ON a.exclusions = b.topping_id
-ORDER BY n_times DESC
+WITH MOST_COMMON_EXCLUSION AS
+	(SELECT EXCLUSIONS,
+			COUNT(*) AS N_TIMES
+		FROM CUSTOMER_ORDERS_CLEANED
+		WHERE EXCLUSIONS IS NOT NULL
+		GROUP BY 1)
+		
+SELECT DISTINCT TOPPING_NAME,
+	N_TIMES
+FROM MOST_COMMON_EXCLUSION AS A
+INNER JOIN PIZZA_TOPPINGS_CLEANED AS B ON A.EXCLUSIONS = B.TOPPING_ID
+ORDER BY N_TIMES DESC
 LIMIT 1
 
--- 5. What is the total quantity of each ingredient used in all delivered pizzas sorted by most frequent first?
-WITH delivered AS (
-	SELECT order_id 
-	FROM runner_orders_cleaned
-	WHERE cancellation = 0
-),
-
-toppings AS (
-	SELECT pizza_id, topping_id, topping_name  
-	FROM pizza_toppings_cleaned
-),
-
-orders AS (
-	SELECT order_id, pizza_id
-	FROM customer_orders_cleaned
-),
-
-exclusions AS (
-	SELECT exclusions, COUNT(*) AS n_exclude 
-	FROM customer_orders_cleaned
-	WHERE exclusions IS NOT NULL
-	GROUP BY exclusions
-),
-
-extras AS (
-	SELECT extras, COUNT(*) AS n_extras
-	FROM customer_orders_cleaned
-	WHERE extras IS NOT NULL
-	GROUP BY extras
-),
-
-n_toppings AS (
-	SELECT topping_name, topping_id, COUNT(*) AS counts
-	FROM orders AS o
-	INNER JOIN delivered AS d 
-	USING (order_id)
-	INNER JOIN toppings AS t
-	USING (pizza_id)
-	GROUP BY topping_name, topping_id
-)
-
-SELECT * FROM n_toppings
+-- 4. What is the total quantity of each ingredient used in all delivered pizzas sorted by most frequent first?
+WITH DELIVERED AS
+	(SELECT ORDER_ID
+		FROM RUNNER_ORDERS_CLEANED
+		WHERE CANCELLATION = 0 ),
+		
+	TOPPINGS AS
+	(SELECT PIZZA_ID,
+			TOPPING_ID,
+			TOPPING_NAME
+		FROM PIZZA_TOPPINGS_CLEANED),
+		
+	ORDERS AS
+	(SELECT ORDER_ID,
+			PIZZA_ID
+		FROM CUSTOMER_ORDERS_CLEANED),
+		
+	EXCLUSIONS AS
+	(SELECT EXCLUSIONS,
+			COUNT(*) AS N_EXCLUDE
+		FROM CUSTOMER_ORDERS_CLEANED
+		WHERE EXCLUSIONS IS NOT NULL
+		GROUP BY EXCLUSIONS),
+		
+	EXTRAS AS
+	(SELECT EXTRAS,
+			COUNT(*) AS N_EXTRAS
+		FROM CUSTOMER_ORDERS_CLEANED
+		WHERE EXTRAS IS NOT NULL
+		GROUP BY EXTRAS),
+		
+	N_TOPPINGS AS
+	(SELECT TOPPING_NAME,
+			TOPPING_ID,
+			COUNT(*) AS COUNTS
+		FROM ORDERS AS O
+		INNER JOIN DELIVERED AS D USING (ORDER_ID)
+		INNER JOIN TOPPINGS AS T USING (PIZZA_ID)
+		GROUP BY TOPPING_NAME, TOPPING_ID)
+		
+SELECT TOPPING_NAME,
+	COUNTS
+FROM N_TOPPINGS
+ORDER BY COUNTS DESC
 
 
 /*
@@ -471,9 +449,9 @@ WITH COMBINED AS
 		
 	REVENUE AS
 	(SELECT SUM(CASE
-					WHEN PIZZA_NAME = 'Meatlovers' THEN N_PIZZAS * 12
-					ELSE N_PIZZAS * 10
-					END) AS TOTAL_REVENUE
+			WHEN PIZZA_NAME = 'Meatlovers' THEN N_PIZZAS * 12
+			ELSE N_PIZZAS * 10
+			END) AS TOTAL_REVENUE
 		FROM NUM_PIZZAS)
 
 SELECT *
@@ -496,11 +474,11 @@ WITH COMBINED AS
 		
 	REVENUE AS
 	(SELECT SUM(CASE
-					WHEN PIZZA_NAME = 'Meatlovers' AND EXTRAS IS NOT NULL THEN N_PIZZAS * (12 + 1)
-					WHEN PIZZA_NAME = 'Vegetarian' AND EXTRAS IS NOT NULL THEN N_PIZZAS * (10 + 1)
-					WHEN PIZZA_NAME = 'Meatlovers' AND EXTRAS IS NULL THEN N_PIZZAS * 12
-					ELSE N_PIZZAS * 10
-					END) AS TOTAL_REVENUE
+			WHEN PIZZA_NAME = 'Meatlovers' AND EXTRAS IS NOT NULL THEN N_PIZZAS * (12 + 1)
+			WHEN PIZZA_NAME = 'Vegetarian' AND EXTRAS IS NOT NULL THEN N_PIZZAS * (10 + 1)
+			WHEN PIZZA_NAME = 'Meatlovers' AND EXTRAS IS NULL THEN N_PIZZAS * 12
+			ELSE N_PIZZAS * 10
+			END) AS TOTAL_REVENUE
 		FROM NUM_PIZZAS)
 		
 SELECT *
@@ -524,12 +502,10 @@ WITH SUCCESSFUL_DELIVERIES AS
 		
 	REVENUE AS
 	(SELECT SUM(CASE
-					WHEN PIZZA_NAME = 'Meatlovers' THEN N_PIZZAS * 12 - TOTAL_DISTANCE * 0.3
-					ELSE N_PIZZAS * 10 - TOTAL_DISTANCE * 0.3
-					END) AS TOTAL_REVENUE
+			WHEN PIZZA_NAME = 'Meatlovers' THEN N_PIZZAS * 12 - TOTAL_DISTANCE * 0.3
+			ELSE N_PIZZAS * 10 - TOTAL_DISTANCE * 0.3
+			END) AS TOTAL_PROFIT
 		FROM COMBINED)
 		
 SELECT *
 FROM REVENUE
-	
-	
