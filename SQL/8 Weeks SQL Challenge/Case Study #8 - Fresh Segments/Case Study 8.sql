@@ -10,22 +10,32 @@ SELECT MONTH_YEAR,
 	COUNT(*) AS N_RECORDS
 FROM FRESH_SEGMENTS.INTEREST_METRICS
 GROUP BY 1
-ORDER BY 1
+ORDER BY 1 NULLS FIRST
 
 -- 3. How many interest_id values exist in the fresh_segments.interest_metrics table but not in the fresh_segments.interest_map table? What about the other way around?
-SELECT COUNT(DISTINCT INTEREST_ID)
-FROM FRESH_SEGMENTS.INTEREST_METRICS
-WHERE CAST(INTEREST_ID AS numeric) NOT IN
-		(SELECT ID
-			FROM FRESH_SEGMENTS.INTEREST_MAP)
+WITH NOT_IN_MAP AS
+	(SELECT COUNT(INTEREST_ID) AS N_METRICS_IDS
+		FROM FRESH_SEGMENTS.INTEREST_METRICS
+		WHERE NOT EXISTS
+				(SELECT ID
+					FROM FRESH_SEGMENTS.INTEREST_MAP
+					WHERE FRESH_SEGMENTS.INTEREST_METRICS.INTEREST_ID::NUMERIC = FRESH_SEGMENTS.INTEREST_MAP.ID) ),
+
+	NOT_IN_METRICS AS
+	(SELECT COUNT(ID) AS N_MAP_IDS
+		FROM FRESH_SEGMENTS.INTEREST_MAP
+		WHERE NOT EXISTS
+				(SELECT INTEREST_ID
+					FROM FRESH_SEGMENTS.INTEREST_METRICS
+					WHERE FRESH_SEGMENTS.INTEREST_METRICS.INTEREST_ID::NUMERIC = FRESH_SEGMENTS.INTEREST_MAP.ID) )
+
+SELECT *
+FROM NOT_IN_MAP,
+	NOT_IN_METRICS
 
 -- 4. Summarise the id values in the fresh_segments.interest_map by its total record count in this table
 SELECT COUNT(DISTINCT ID) AS RECORD_COUNT
 FROM FRESH_SEGMENTS.INTEREST_MAP
-
--- 5. What sort of table join should we perform for our analysis and why? 
---Check your logic by checking the rows where interest_id = 21246 in your joined output and include all columns from fresh_segments.interest_metrics and all columns from fresh_segments.interest_map except from the id column.
--- 6. Are there any records in your joined table where the month_year value is before the created_at value from the fresh_segments.interest_map table? Do you think these values are valid and why?
 
 /*
 	2. Interest Analysis
@@ -44,7 +54,6 @@ WHERE N_APPEARANCES =
 		(SELECT COUNT(DISTINCT MONTH_YEAR)
 			FROM FRESH_SEGMENTS.INTEREST_METRICS)
 ORDER BY 1 
---limit 5
 
 -- 2. Using this same total_months measure - calculate the cumulative percentage of all records starting at 14 months - which total_months value passes the 90% cumulative percentage value?
 WITH INTEREST_MONTHS AS
@@ -239,8 +248,6 @@ SELECT INTEREST_NAME,
 FROM MIN_DATE_CTE
 INNER JOIN MAX_DATE_CTE USING (INTEREST_NAME)
 ORDER BY 1
-
--- 5. How would you describe our customers in this segment based off their composition and ranking values? What sort of products or services should we show to these customers and what should we avoid?
 
 /*
 	4. Index Analysis
