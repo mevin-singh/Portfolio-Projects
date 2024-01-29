@@ -65,20 +65,17 @@ Software Requirements and Editor used:
 ### Logistic Regression
 Confusion Matrix and Classification Report:
 
-
+![Alt text](image-2.png)
 
 
 
 ## Scores for Each Region
 
 
-![Alt text](image-2.png)
-
 
 By using a pie chart to compare the relative performance of each region against one another, we can observe that California has the highest score, followed by Southcentral and Great Lake. The 5 other regions that GreenGrocer can potentially venture into are classified under 'Others', due to its low proportion of scores. With these outstanding score, GreenGrocer should penetrate into California, Southcentral and Great Lakes.
 
 
-![Alt text](image-3.png)
 
 
 To analyse the 5 other regions on a deeper level, the standards 'Not Recommended', 'Recommended' and 'Highly Recommended' have been determined through the past experience with dealing with other fruit companies who have sought help from regarding the same issue. We can see that should GreenGrocer acquire more capital and be willing to set up more avocado shops in more regions other than the 3 identified above, they should target the Southeast and Norteast regions.
