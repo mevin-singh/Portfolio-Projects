@@ -23,7 +23,7 @@ Software Requirements and Editor used:
 
 # Data 
 ## Source Data
-- **Kaggle:** The dataset was obtained from [Telcom Data] (https://www.kaggle.com/datasets/spscientist/telecom-data) 
+- **Kaggle:** The dataset was obtained from [Telcom Data](https://www.kaggle.com/datasets/spscientist/telecom-data) 
 
 
 ## Description of Dataset
