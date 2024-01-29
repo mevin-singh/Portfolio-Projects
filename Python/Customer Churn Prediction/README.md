@@ -89,30 +89,7 @@ Confusion Matrix and Classification Report:
 
 ## Model Comparison
 
-<img src="image-5.png" alt="df" width="900" height="200" />
+<img src="image-5.png" alt="df" width="600" height="200" />
 
 - From the model evaluation, we can see that the Light Gradient Boosting has the highest f1_score and AUC among the 3 models. Thus, it should be the model to be used to predict if the customer churns or not. 
 - We can also see that in all 3 models, they do extremely well in predicting if a customer does not churn as all 3 models have the higher f1_score when predicting the False case.
-
-
-## Scores for Each Region
-
-
-
-By using a pie chart to compare the relative performance of each region against one another, we can observe that California has the highest score, followed by Southcentral and Great Lake. The 5 other regions that GreenGrocer can potentially venture into are classified under 'Others', due to its low proportion of scores. With these outstanding score, GreenGrocer should penetrate into California, Southcentral and Great Lakes.
-
-
-
-
-To analyse the 5 other regions on a deeper level, the standards 'Not Recommended', 'Recommended' and 'Highly Recommended' have been determined through the past experience with dealing with other fruit companies who have sought help from regarding the same issue. We can see that should GreenGrocer acquire more capital and be willing to set up more avocado shops in more regions other than the 3 identified above, they should target the Southeast and Norteast regions.
-
-## Limitations & Improvements
-- **Limited Avocado Types:** The dataset only explores Hass avocados, providing a limited view of the avocado industry as there are many other varieties availiable. Although we are not able to determine the most lucrative revenue-generating variety, our analysis is useful for the business problem since Hass avocados are the most popular worldwide.
-
-- **Factors of Demand:** The historical data solely represents the number of avocados sold in each region and does not take into account avocado demand. Demand and amount supplied are not equal since there may be instances when there is insufficient avocado supply to match the stipulated demand. The potential revenue generated, particularly in locations where demand exceeds quantity sold, may be significant. However, due to supply limits, the region can only deliver the restricted number of avocados available. As a result, when there is excess demand but insufficient supply, the money generated may be overstated, and the dataset may not accurately reflect the revenue that may be earned in the location.
-
-- **Inability to Capture Certain Regions:** The dataset used might not capture all regions in the US since there are 50 states in the US but not all may be reflected equally in the dataset. Therefore, there is a possibility of missing out on a state that can generate higher profits than the one we concluded on, resulting in possibly an inaccurate and incorrect market-entry strategy for GreenGrocer
-
-- **Different Number of Avocado Sellers in Each State:** The total number of avocados provided in the dataset is aggregated sum of the avocados sold by all existing sellers in each region. Thus, it may not reflect the number of sellers and show the overall trend of each vendor. Using the total number of avocados sold by all sellers, we are unable to determine whether there are different trends for each seller. As a result, we are unable to estimate the actual volume sold at each location. However, because a general trend is apparent, we believe the analysis is solid enough for GreenGrocer.
-
-
