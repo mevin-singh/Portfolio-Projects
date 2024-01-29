@@ -61,13 +61,14 @@ Software Requirements and Editor used:
 ***
 
 # Results and Evaluation
-## Scoring system
-To assist GreenGrocer in finding out the best region to enter, I dervied a scoring system to evaluate each of the regions in the US based on 3 variables: seasons, type and grade.
-
+## Model Evaluation
+### Logistic Regression
+Confusion Matrix and Classification Report:
 
 ![Alt text](image-1.png)
+![Alt text](image.png)
 
-With reference to the figure above, for seasons, since Spring has the highest average revenue, it will be allocated with 4 points, followed by Summer (3 points), Winter (2 points), and Autumn (1 point). And for type, conventional avocados will be assigned with 2 points and organic with 1 point, and for the grade of avocados, “4770” will be given 3 points, “4046” with 2 points, and “4225” with 1 point
+
 
 ## Scores for Each Region
 
