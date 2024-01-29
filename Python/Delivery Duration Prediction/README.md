@@ -95,6 +95,7 @@ The logic for obtaining the region is as follows:
 
 ### Final Dataset
 - At the end of all the data cleaning and preprocessing, there were 40197 rows with following 11 columns:
+
 | Column Name           | Column Type  |
 |-----------------------|--------------|
 | Delivery_person_Age   | Feature      |
