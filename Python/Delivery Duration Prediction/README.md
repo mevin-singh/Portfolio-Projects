@@ -69,9 +69,57 @@ Software Requirements and Editor used:
 
 ### Getting distance between Restaurant and Delivery location using Latitude and Longitude Data
 - Using the haversine formula, we can find the distance between 2 locations using their Latitude and Longitude data
-- By using the formula, the distance between the restaurant and delivery location was obtain
+- By using the formula, the distance between the restaurant and delivery location was obtained
 
-###
+### Getting the region where the Restaurant and Delivery location are in
+Since this was not given explicitly in the dataset, I opted to use KMeans Clustering to determine the region
+
+The logic for obtaining the region is as follows:
+- Since this data is obtained from India, I have approximated the coordinates for the center of the North, South, East and West regions based on Google Maps
+- Setting the number of clusters as 4, we are able to obtain the clusters using the KMeans clustering algorithm
+
+### Weather Conditions
+- In the original data, the `Weatherconditions` columns was written with weather infront of the weather condition
+- Only the weather condition was extracted for use
+
+### Time Taken
+- In the original data, the string `mins` was included alongside the numerical time taken
+- Only the numerical time taken was extracted for use
+
+### Vehicle Condition
+- In the original data, the columns contained values 0 - 2 and there was not explaination of column
+- As such, I created my own condition with 0 being `Below Average`, 1 being `Average` and 2 being `Good`
+
+### Deliver person rating
+- Instead of leaving the ratings from limited from 0-5, I decided to change the ratings into a satisfaction percentage using the following transformation: `ratings/5 * 100`
+
+### Final Dataset
+- At the end of all the data cleaning and preprocessing, there were 40197 rows with following 11 columns:
+| Column Name           | Column Type  |
+|-----------------------|--------------|
+| Delivery_person_Age   | Feature      |
+| Satisfaction_Perc     | Feature      |
+| Weatherconditions     | Feature      |
+| Road_traffic_density  | Feature      |
+| Vehicle_condition     | Feature      |
+| Type_of_order         | Feature      |
+| Type_of_vehicle       | Feature      |
+| Time_of_Day_Ordered   | Feature      |
+| Distance              | Feature      |
+| Region                | Feature      |
+| Time_taken_mins       | Target       |
+
+## Data Exploration
+### Correlation Matrix between Numerical Variables
+- All numerical data was scaled using StandardScaler for easier comparison
+
+<img src="image.png" alt="corr" width="600" height="600" />
+
+
+From the correlation matrix, we can see that there is almost no correlation between the numerical variables which is a good sign since having high correlation may lead to multicollinearity issues.
+
+### Correlation/association between categorical variables
+
 
 
 ***
