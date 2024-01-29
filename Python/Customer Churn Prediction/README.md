@@ -65,7 +65,7 @@ Software Requirements and Editor used:
 ### Logistic Regression
 Confusion Matrix and Classification Report:
 
-<img src="image-2.png" alt="drawing" width="600" height="520" />
+<img src="image-2.png" alt="drawing" width="600" height="600" />
 
 
 
