@@ -46,4 +46,6 @@ The data set originally contained 33,045 data listings. I first began checking f
 # Results and Evaluation
 ## Scoring system
 To assist GreenGrocer in finding out the best region to enter, I dervied a scoring system to evaluate each of the regions in the US based on 3 variables: seasons, type and grade.
+
+
 ![Alt text](image-1.png)
