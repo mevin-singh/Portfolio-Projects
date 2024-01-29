@@ -86,7 +86,7 @@ Confusion Matrix and Classification Report:
 - Overall accuracy is still high but lower than that of the previous 2 models.
 
 ## Model Comparison
-<img src="image-5.png" alt="df" width="600" height="600" />
+<img src="image-5.png" alt="df" width="200" height="1600" />
 
 - From the model evaluation, we can see that the Light Gradient Boosting has the highest f1_score and AUC among the 3 models. Thus, it should be the model to be used to predict if the customer churns or not. 
 - We can also see that in all 3 models, they do extremely well in predicting if a customer does not churn as all 3 models have the higher f1_score when predicting the False case.
