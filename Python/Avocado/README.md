@@ -29,16 +29,14 @@ Software Requirements and Editor used:
 - **Statista:** The dataset of revenue from the fresh fruit industry between 2013 to 2026 (projected) was obtained from Statista, which contains the projected reveue of the fresh fruit industry for 150 countries
 
 ## Terminologies
-| **Avocado Grades** | According to Love One Today (LOT), an official subsidiary under the Hass Avocado Board (HAB),
-there are 3 main grades of avocados, #4046, #4225, #4770 |
-| **Avocado Type** | In this dataset, there are 2 types of avocados namely, conventional and organic |
-| **Regions**  | According to HAB, the states in the US have been classified into 8 regions such as Plains,
-Southeast (SE), Southcentral (SC), Northeast (NE), West, Midsouth (MS), California (Cali), Great
-Lakes (GL) |
-| **Season** | There are 4 seasons in a year, namely Winter, Spring, Summer, and Autumn |
-| **Average Price** | In this dataset, the average price refers to the average price of a single avocado in that week
-according to the respective locations |
-| **Total Volume** | Total number of avocados sold |
+| Category        | Description                                                                                                      |
+|-----------------|------------------------------------------------------------------------------------------------------------------|
+| Avocado Grades  | #4046, #4225, #4770                                                                                               |
+| Avocado Type    | Conventional, Organic                                                                                            |
+| Regions         | Plains, Southeast (SE), Southcentral (SC), Northeast (NE), West, Midsouth (MS), California (Cali), Great Lakes (GL) |
+| Season          | Winter, Spring, Summer, Autumn                                                                                    |
+| Average Price   | Average price of a single avocado in that week according to the respective locations                            |
+| Total Volume    | Total number of avocados sold                                                                                     |
 
 ## Data Cleaning/Preprocessing
 The data set originally contained 33,045 data listings. I first began checking for empty values, to minimize any subsequent issues due to possible errors in the data entry process. Thereafter, we removed any duplicate data present which will cause the analysis to be skewed. After cleaning the data to increase accuracy, a total of 11,273 listings was used for further analysis.
