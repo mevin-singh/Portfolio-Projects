@@ -27,7 +27,7 @@ The data obtained was from [Yahoo Finance](https://sg.finance.yahoo.com/quote/VO
 
 # Results and Evaluation
 
-<img src="image.png" alt="df" width="900" height="200" />
+<img src="image.png" alt="df" width="1000" height="300" />
 
 Looking at the rates of returns, as a long term investor, Mondays would be best day to invest for me since I am not concerned with day-to-day changes in prices and prices seem to be lowest on Mondays. This also supports the Weekend Effect which is a phenomemon in which stock returns on Mondays are often significantly lower than those of the immediately preceding Friday.
 
