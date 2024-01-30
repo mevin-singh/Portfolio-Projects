@@ -144,7 +144,7 @@ From the variables that are dependent, we can see that:
 ### Multiple Linear Regression
 Regression Output Results:
 
-<img src="image-1.png" alt="reg" width="600" height="600" />
+<img src="image-1.png" alt="reg" width="900" height="900" />
 
 - From the confusion matrix, we can see that the f1-score for negative case (people who do not churn) is much higher than that of positive case (people who churn). This is mainly due to the dataset having 86% of the records comprising people who did not churn.
 - Overall accuracy is rather high, with a value of 91%.
