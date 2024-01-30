@@ -152,7 +152,7 @@ Regression Output Results:
 
 ### Non-Linear Regressors
 
-<img src="image-2.png" alt="df" width="600" height="200" />
+<img src="image-2.png" alt="df" width="800" height="100" />
 
 - Using $R^2$ as the comparison metric, we can see that among the models, Random Forest came out to the best after tuning with an $R^2$ of 0.825. This means that using Random Forest, we can use the aforementioned features to explain 82.5% of the variation in delivery duration.
 
