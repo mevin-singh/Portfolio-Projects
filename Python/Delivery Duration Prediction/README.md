@@ -146,30 +146,42 @@ Regression Output Results:
 
 <img src="image-1.png" alt="reg" width="900" height="900" />
 
-- From the confusion matrix, we can see that the f1-score for negative case (people who do not churn) is much higher than that of positive case (people who churn). This is mainly due to the dataset having 86% of the records comprising people who did not churn.
-- Overall accuracy is rather high, with a value of 91%.
+- We can see from the Linear Regression model that the $R^2$ is relatively low, with a value of 0.512. This could indicate that there is non-linear relationships between the variables in the model.
+- Thus, non-linear regression methods will be used subsequently.
 
 
-### Light Gradient Boosting Machine (LGBM) Classifier
-Confusion Matrix and Classification Report:
+### Non-Linear Regressors
 
-<img src="image-3.png" alt="draw" width="800" height="800" />
+<img src="image-2.png" alt="df" width="600" height="200" />
 
-- From the confusion matrix, the f1-score for the negative case for the LGBM Classifier is also significantly higher than that of the positive case
-- Overall accuracy is very high, with a value of 91%
+- Using $R^2$ as the comparison metric, we can see that among the models, Random Forest came out to the best after tuning with an $R^2$ of 0.825. This means that using Random Forest, we can use the aforementioned features to explain 82.5% of the variation in delivery duration.
 
-### Logistic Regression
-Confusion Matrix and Classification Report:
 
-<img src="image-4.png" alt="draw" width="600" height="600" />
+## Model Interpretation (Feature Importance)
+### Random Forest
 
-- From the confusion matrix, the f1-score for the negative case is still significantly higher than that of the positive case but slightly lower than LGBM and Gradient Boosting Classifiers.
-- Overall accuracy is still high but lower than that of the previous 2 models.
+<img src="image-3.png" alt="rf" width="600" height="600" />
 
-## Model Comparison
 
-<img src="image-5.png" alt="df" width="600" height="200" />
 
-- From the model evaluation, we can see that the Light Gradient Boosting has the highest f1_score and AUC among the 3 models. Thus, it should be the model to be used to predict if the customer churns or not. 
-- We can also see that in all 3 models, they do extremely well in predicting if a customer does not churn as all 3 models have the higher f1_score when predicting the False case.
+### Gradient Boosting
+
+<img src="image-4.png" alt="gb" width="600" height="600" />
+
+
+
+### Multi-Layer Perceptron
+
+<img src="image-5.png" alt="gb" width="600" height="600" />
+
+
+From the feature importances plot, we can see that:
+- Random Forest and Gradient Boosting placed the same importance on Satisfaction Percentage, Low traffic road density and distance. All 3 are very relevant factors that can affect delivery duration
+- For the Neural Network, the most important feature was distance and it is very clear that it can and will affect delivery duration
+
+
+
+
+
+
 
