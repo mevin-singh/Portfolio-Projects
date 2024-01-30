@@ -120,10 +120,56 @@ The logic for obtaining the region is as follows:
 From the correlation matrix, we can see that there is almost no correlation between the numerical variables which is a good sign since having high correlation may lead to multicollinearity issues.
 
 ### Correlation/association between categorical variables
+To test for the correlation between categorical variables, we will use the [Chi-Squared Test of Independence](https://www.jmp.com/en_sg/statistics-knowledge-portal/chi-square-test/chi-square-test-of-independence.html) and the [Cramér's V](https://www.ibm.com/docs/en/cognos-analytics/11.1.0?topic=terms-cramrs-v)
 
+**Chi-Squared Test of Independence**
+With a p-value of 0.05, the pairs that are dependent are: `Road_traffic_density` and `Time_of_Day_Orderd`, `Vehicle_condition` and `Type_of_vehicle`, `Type_of_vehicle` and `Region`
 
+**Cramér's V**
+| Variable 1           | Variable 2         | Cramér's V     |
+| -------------------- | ------------------ | -------------- |
+| Road_traffic_density | Time_of_Day_Orderd | 0.774          |
+| Vehicle_condition    | Type_of_Vehicle    | 0.480          |
+| Type_of_vehicle      | Region             | 0.0105         |
+
+From the variables that are dependent, we can see that:
+- There is very strong correlation between Road Traffic Density and Time of Day Ordered which is understandable since ordering at peak hour timings would mean high road traffic density
+- There is moderate correlation between vehicle condition and type of vehicle 
+- There is weak correlation between type of vehicle and region
 
 ***
 
 # Results and Evaluation
 ## Model Evaluation
+### Multiple Linear Regression
+Regression Output Results:
+
+<img src="image-1.png" alt="reg" width="600" height="600" />
+
+- From the confusion matrix, we can see that the f1-score for negative case (people who do not churn) is much higher than that of positive case (people who churn). This is mainly due to the dataset having 86% of the records comprising people who did not churn.
+- Overall accuracy is rather high, with a value of 91%.
+
+
+### Light Gradient Boosting Machine (LGBM) Classifier
+Confusion Matrix and Classification Report:
+
+<img src="image-3.png" alt="draw" width="600" height="600" />
+
+- From the confusion matrix, the f1-score for the negative case for the LGBM Classifier is also significantly higher than that of the positive case
+- Overall accuracy is very high, with a value of 91%
+
+### Logistic Regression
+Confusion Matrix and Classification Report:
+
+<img src="image-4.png" alt="draw" width="600" height="600" />
+
+- From the confusion matrix, the f1-score for the negative case is still significantly higher than that of the positive case but slightly lower than LGBM and Gradient Boosting Classifiers.
+- Overall accuracy is still high but lower than that of the previous 2 models.
+
+## Model Comparison
+
+<img src="image-5.png" alt="df" width="600" height="200" />
+
+- From the model evaluation, we can see that the Light Gradient Boosting has the highest f1_score and AUC among the 3 models. Thus, it should be the model to be used to predict if the customer churns or not. 
+- We can also see that in all 3 models, they do extremely well in predicting if a customer does not churn as all 3 models have the higher f1_score when predicting the False case.
+
