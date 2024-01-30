@@ -160,19 +160,19 @@ Regression Output Results:
 ## Model Interpretation (Feature Importance)
 ### Random Forest
 
-<img src="image-3.png" alt="rf" width="1200" height="200" />
+<img src="image-3.png" alt="rf" width="1200" height="500" />
 
 
 
 ### Gradient Boosting
 
-<img src="image-4.png" alt="gb" width="1200" height="200" />
+<img src="image-4.png" alt="gb" width="1200" height="500" />
 
 
 
 ### Multi-Layer Perceptron
 
-<img src="image-5.png" alt="gb" width="1200" height="200" />
+<img src="image-5.png" alt="gb" width="1200" height="500" />
 
 
 From the feature importances plot, we can see that:
