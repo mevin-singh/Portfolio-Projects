@@ -176,7 +176,7 @@ Regression Output Results:
 
 
 From the feature importances plot, we can see that:
-- Random Forest and Gradient Boosting placed the same importance on Satisfaction Percentage, Low traffic road density and distance. All 3 are very relevant factors that can affect delivery duration
+- Random Forest and Gradient Boosting placed the same importance on Satisfaction Percentage, Low traffic road density and distance. All 3 are very relevant factors that can affect delivery duration.
 - For the Neural Network, the most important feature was distance and it is very clear that it can and will affect delivery duration
 
 
