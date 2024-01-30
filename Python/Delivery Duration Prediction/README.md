@@ -153,7 +153,7 @@ Regression Output Results:
 ### Light Gradient Boosting Machine (LGBM) Classifier
 Confusion Matrix and Classification Report:
 
-<img src="image-3.png" alt="draw" width="600" height="600" />
+<img src="image-3.png" alt="draw" width="800" height="800" />
 
 - From the confusion matrix, the f1-score for the negative case for the LGBM Classifier is also significantly higher than that of the positive case
 - Overall accuracy is very high, with a value of 91%
