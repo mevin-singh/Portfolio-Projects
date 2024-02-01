@@ -91,7 +91,7 @@ From the box plot above, we can see that:
 ### Wine Body and Acidity
 
 
-<img src="image-1.png" alt="body" width="600" height="600" />
+<img src="image-1.png" alt="body" width="1000" height="500" />
 
 
 It is widely understood that wines with higher acidity tend to create a lighter sensation on the palate for the [drinker](https://www.wineinvestment.com/sg/learn/magazine/2019/05/understanding-the-five-basic-characteristics-of-wine/).
