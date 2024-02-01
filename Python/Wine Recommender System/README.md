@@ -113,7 +113,7 @@ From the highlight table above, we can see that:
 ### Distribution of Wine Type
 
 
-<img src="image-3.png" alt="type" width="600" height="1000" />
+<img src="image-3.png" alt="type" width="600" height="600" />
 
 
 With the `Type` being our target variable, we can see that there is a imbalance data with Red wines being the most predominant wine type. Thus, in the model building process, [ensemble techniques](https://bmcmedinformdecismak.biomedcentral.com/articles/10.1186/s12911-022-01821-w#:~:text=Many%20studies%20have%20demonstrated%20that,and%20more%20comprehensive%20strong%20model.) would be used to counter the imbalance data.
