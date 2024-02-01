@@ -77,7 +77,7 @@ Map with supermarkets in Singapore:
 ### Personalised Itinerary Planning
 - Allows users to filter and choose the price range and whether they prefer indoor or outdoor activities
 
-<img src="image-7.png" alt="pip" width="700" height="200" />
+<img src="image-7.png" alt="pip" width="1000" height="500" />
 
 
 ### Smart Recommendations
