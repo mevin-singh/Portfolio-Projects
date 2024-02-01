@@ -62,7 +62,7 @@ Map with attractions based on price filter:
 <img src="image-3.png" alt="qsp" width="1000" height="500" />
 
 
-<img src="image-4.png" alt="q" width="700" height="200" />
+<img src="image-4.png" alt="q" width="1000" height="500" />
 
 
 <img src="image-5.png" alt="sp" width="1000" height="500" />
