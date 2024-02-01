@@ -65,7 +65,7 @@ Map with attractions based on price filter:
 <img src="image-4.png" alt="q" width="700" height="200" />
 
 
-<img src="image-5.png" alt="sp" width="700" height="200" />
+<img src="image-5.png" alt="sp" width="1000" height="500" />
 
 
 Map with supermarkets in Singapore:
