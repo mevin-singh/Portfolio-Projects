@@ -131,7 +131,7 @@ Classification Report and Confusion Matrix:
 
 AUC before and after hyperparameter tuning:
 
-<img src="image-5.png" alt="rf1" width="900" height="900" />
+<img src="image-5.png" alt="rf1" width="700" height="300" />
 
 
 
@@ -142,7 +142,7 @@ Classification Report and Confusion Matrix
 
 
 AUC before and after hyperparameter tuning:
-<img src="image-7.png" alt="mlp1" width="900" height="900" />
+<img src="image-7.png" alt="mlp1" width="700" height="300" />
 
 
 ### XGBoost Classifier
@@ -152,7 +152,7 @@ Classification Report and Confusion Matrix:
 
 
 AUC before and after hyperparameter tuning:
-<img src="image-9.png" alt="mlp1" width="900" height="900" />
+<img src="image-9.png" alt="mlp1" width="700" height="300" />
 
 
 ## Model Comparison
@@ -188,7 +188,7 @@ From the feature importances plot, we can see that:
 
 ## Model Comparison
 
-<img src="image-13.png" alt="comp" width="700" height="500" />
+<img src="image-13.png" alt="comp" width="300" height="300" />
 
 Using AUC as the evaluation metric, we decided to use the `Random Forest Classifier` model to predict wine types for users since it performed the best.
 
