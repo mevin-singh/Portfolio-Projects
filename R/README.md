@@ -38,20 +38,20 @@ Software Requirements and Editor used:
 ### "Explore More"
 - Displays 6 main features of GWS, allowing users to quickly navigate to their desired tabs with ease (refer to image below)
 
-<img src="image.png" alt="expm" width="700" height="200" />
+<img src="image.png" alt="expm" width="1000" height="500" />
 
 
 ### COVID-19 Travel Updates
 - Displays the latest travel regulations and accepted vaccines from the Singapore government.
 
-<img src="image-1.png" alt="cov" width="700" height="200" />
+<img src="image-1.png" alt="cov" width="1000" height="500" />
 
 
 ### Promotions and Advertisements
 - Allows for collaboration between GoWhereSia (GWS) and other companies to earn revenue.
 - By featuring advertisements for local attractions or restaurants, or offering discounts exclusive to GWS, users can enjoy discounted prices for their attraction tickets.
 
-<img src="image-2.png" alt="pna" width="700" height="200" />
+<img src="image-2.png" alt="pna" width="1000" height="500" />
 
 
 ## Quick Search Tab
@@ -62,7 +62,7 @@ Map with attractions based on price filter:
 <img src="image-3.png" alt="qsp" width="1000" height="500" />
 
 
-<img src="image-4.png" alt="q" width="1000" height="500" />
+<img src="image-4.png" alt="q" width="1000" height="200" />
 
 
 <img src="image-5.png" alt="sp" width="1000" height="500" />
