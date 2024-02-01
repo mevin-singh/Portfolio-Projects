@@ -188,7 +188,7 @@ From the feature importances plot, we can see that:
 
 ## Model Comparison
 
-<img src="image-13.png" alt="comp" width="900" height="400" />
+<img src="image-13.png" alt="comp" width="700" height="200" />
 
 Using AUC as the evaluation metric, we decided to use the `Random Forest Classifier` model to predict wine types for users since it performed the best.
 
