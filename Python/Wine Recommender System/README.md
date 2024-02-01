@@ -152,7 +152,7 @@ Classification Report and Confusion Matrix:
 
 
 AUC before and after hyperparameter tuning:
-<img src="image-9.png" alt="mlp1" width="700" height="300" />
+<img src="image-9.png" alt="mlp1" width="1000" height="50" />
 
 
 ## Model Comparison
