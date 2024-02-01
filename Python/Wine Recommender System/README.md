@@ -131,7 +131,7 @@ Classification Report and Confusion Matrix:
 
 AUC before and after hyperparameter tuning:
 
-<img src="image-5.png" alt="rf1" width="1000" height="100" />
+<img src="image-5.png" alt="rf1" width="80" height="50" />
 
 
 
@@ -142,7 +142,7 @@ Classification Report and Confusion Matrix
 
 
 AUC before and after hyperparameter tuning:
-<img src="image-7.png" alt="mlp1" width="1000" height="100" />
+<img src="image-7.png" alt="mlp1" width="80" height="50" />
 
 
 ### XGBoost Classifier
@@ -152,7 +152,7 @@ Classification Report and Confusion Matrix:
 
 
 AUC before and after hyperparameter tuning:
-<img src="image-9.png" alt="mlp1" width="1000" height="100" />
+<img src="image-9.png" alt="mlp1" width="80" height="50" />
 
 
 ## Model Comparison
