@@ -59,7 +59,7 @@ Software Requirements and Editor used:
 
 Map with attractions based on price filter:
 
-<img src="image-3.png" alt="qsp" width="700" height="200" />
+<img src="image-3.png" alt="qsp" width="1000" height="500" />
 
 
 <img src="image-4.png" alt="q" width="700" height="200" />
@@ -70,7 +70,7 @@ Map with attractions based on price filter:
 
 Map with supermarkets in Singapore:
 
-<img src="image-6.png" alt="sm" width="700" height="200" />
+<img src="image-6.png" alt="sm" width="1000" height="500" />
 
 
 ## Itinerary Tab
@@ -83,37 +83,37 @@ Map with supermarkets in Singapore:
 ### Smart Recommendations
 - Recommends activities based on latest weather forecast
 
-<img src="image-8.png" alt="sr" width="700" height="200" />
+<img src="image-8.png" alt="sr" width="1000" height="500" />
 
 
 ### Top Attractions in Singapore
 - Displays the top 20 most popular attractions in Singapore
 
-<img src="image-9.png" alt="wc" width="700" height="200" />
+<img src="image-9.png" alt="wc" width="1000" height="500" />
 
 
 ## Crowd Insights Tab
 - Features a map that indicates the crowd level for each of the locations.
 
-<img src="image-10.png" alt="cit" width="700" height="200" />
+<img src="image-10.png" alt="cit" width="1000" height="500" />
 
 
-<img src="image-11.png" alt="adcl" width="700" height="200" />
+<img src="image-11.png" alt="adcl" width="1000" height="500" />
 
 
 ## Weather Tab
 - Features weather forecast and UV index.
 - Weather forecast data is linked to the database under National Environment Agency of Singapore. 
 
-<img src="image-12.png" alt="w" width="700" height="200" />
+<img src="image-12.png" alt="w" width="1000" height="500" />
 
-<img src="image-13.png" alt="uv" width="700" height="200" />
+<img src="image-13.png" alt="uv" width="1000" height="500" />
 
 
 ## News Tab
 - Features articles about fun activities, attractions and restaurants to visit in Singapore.
 
-<img src="image-14.png" alt="uv" width="700" height="200" />
+<img src="image-14.png" alt="uv" width="1000" height="500" />
 
 
 # Limitations
