@@ -28,7 +28,7 @@ Software Requirements and Editor used:
 - **Attractions:** Referenced popular tourist attractions on [TripAdvisor](https://www.tripadvisor.com/Attractions-g294265-Activities-Singapore.html) and attractions listed on [government's database](https://beta.data.gov.sg/datasets/d_0f2f47515425404e6c9d2a040dd87354/view). Combined datasets with crowd insight from the Google Insights Popular Times page.
 - **Restaurants:** Scraped data from [Chope](https://www.chope.co/singapore-restaurants/list_of_restaurants?source=chope.com.sg&lang=en_US) to extract a list of over a thousand restaurants in Singapore.
 - **Supermarkets and Hawker Centers:** Obtained under Singapore open data license from Data Singapore for the list of [supermarkets](https://beta.data.gov.sg/datasets/d_11edd0117280c5776651d7891114c88c/view) and [hawkers centers](https://beta.data.gov.sg/datasets/d_68a42f09f350881996d83f9cd73ab02f/view) in Singapore.
-- **Weather:** Obtain from live weather[API](https://beta.data.gov.sg/datasets?query=weather%20forecast).
+- **Weather:** Obtain from live weather [API](https://beta.data.gov.sg/datasets?query=weather%20forecast).
 
 
 # App Features
@@ -118,7 +118,7 @@ Map with supermarkets in Singapore:
 
 # Limitations
 - Inability to book tickets to attractions on the website.
-- Singaporeans may not enticed to use the app as they may not be interested in conventional tourist attractions.
+- Singaporeans may not be enticed to use the app as they may not be interested in conventional tourist attractions.
 
 
 # Collaborators
