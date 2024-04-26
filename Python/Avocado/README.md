@@ -4,7 +4,7 @@ Avocado Industry Analysis
 ***
 
 # Project Overview
-In this project, I seek to advise a mock client, GreenGrocer in deciding if it is worthy to penetrate the Avocado industry. Thereafter, assist them in deciding which type of Avocado as well as which regions to set up shop in order to gain the maximum revenue.
+In this project, we seek to advise a mock client, GreenGrocer in deciding if it is worthy to penetrate the Avocado industry. Thereafter, assist them in deciding which type of Avocado as well as which regions to set up shop in order to gain the maximum revenue.
 
 ***
 
@@ -37,13 +37,13 @@ Software Requirements and Editor used:
 | Total Volume    | Total number of avocados sold                                                                                     |
 
 ## Data Cleaning/Preprocessing
-The data set originally contained 33,045 data listings. I first began checking for empty values, to minimize any subsequent issues due to possible errors in the data entry process. Thereafter, we removed any duplicate data present which will cause the analysis to be skewed. After cleaning the data to increase accuracy, a total of 11,273 listings was used for further analysis.
+The data set originally contained 33,045 data listings. we first began checking for empty values, to minimize any subsequent issues due to possible errors in the data entry process. Thereafter, we removed any duplicate data present which will cause the analysis to be skewed. After cleaning the data to increase accuracy, a total of 11,273 listings was used for further analysis.
 
 ***
 
 # Results and Evaluation
 ## Scoring system
-To assist GreenGrocer in finding out the best region to enter, I dervied a scoring system to evaluate each of the regions in the US based on 3 variables: seasons, type and grade.
+To assist GreenGrocer in finding out the best region to enter, we dervied a scoring system to evaluate each of the regions in the US based on 3 variables: seasons, type and grade.
 
 
 ![Alt text](image-1.png)
