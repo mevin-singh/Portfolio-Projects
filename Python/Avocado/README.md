@@ -62,7 +62,7 @@ By using a pie chart to compare the relative performance of each region against 
 ![Alt text](image-3.png)
 
 
-To analyse the 5 other regions on a deeper level, the standards 'Not Recommended', 'Recommended' and 'Highly Recommended' have been determined through the past experience with dealing with other fruit companies who have sought help from regarding the same issue. We can see that should GreenGrocer acquire more capital and be willing to set up more avocado shops in more regions other than the 3 identified above, they should target the Southeast and Norteast regions.
+To analyse the 5 other regions on a deeper level, the standards 'Not Recommended', 'Recommended' and 'Highly Recommended' have been determined through the past experience with dealing with other fruit companies who have sought help from regarding the same issue. We can see that should GreenGrocer acquire more capital and be willing to set up more avocado shops in more regions other than the 3 identified above, they should target the Southeast and Northeast regions.
 
 ## Limitations & Improvements
 - **Limited Avocado Types:** The dataset only explores Hass avocados, providing a limited view of the avocado industry as there are many other varieties availiable. Although we are not able to determine the most lucrative revenue-generating variety, our analysis is useful for the business problem since Hass avocados are the most popular worldwide.
