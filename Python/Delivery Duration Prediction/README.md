@@ -91,7 +91,7 @@ The logic for obtaining the region is as follows:
 - As such, I created my own condition with 0 being `Below Average`, 1 being `Average` and 2 being `Good`
 
 ### Deliver person rating
-- Instead of leaving the ratings from limited from 0-5, I decided to change the ratings into a satisfaction percentage using the following transformation: `ratings/5 * 100`
+- Instead of leaving the ratings limited from 0-5, I decided to change the ratings into a satisfaction percentage using the following transformation: `ratings/5 * 100`
 
 ### Final Dataset
 - At the end of all the data cleaning and preprocessing, there were 40197 rows with following 11 columns:
