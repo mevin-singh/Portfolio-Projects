@@ -88,7 +88,7 @@ Software Requirements and Editor used:
 
 Elbow Plot:
 
-<img src="image.png" alt="elbow" width="900" height="900" />
+<img src="image.png" alt="elbow" width="700" height="600" />
 
 Centroids of Clusters and Assigned Cluster Names by Various LLMs
 
@@ -134,13 +134,13 @@ From the variables that are dependent, we can see that:
 - The highest association is between `reserved_room_type` and `assigned_room_type` with a value of 0.778. This finding is intuitive since customer typically receive the rooms they reserved during booking, barring unforeseen circumstances.
 
 ### Consumer Booking Patterns Over the Years
-<img src="image-3.png" alt="booking" width="700" height="700" />
+<img src="image-3.png" alt="booking" width="1200" height="500" />
 
 - HG88 experienced increased customer engagement and a consistent growth in total bookings over the year. However, this growth also led to a rise in cancellations, as noted by Chua (2020).
 - Despite the growth rate of total bookings surpassing cancellations, the issue of cancellations remains significant. It is essential to address this concern, even though cancellation rates have declined over time.
 
 ### Month-on-Month Change in Cancellation Rates
-<img src="image-4.png" alt="mom" width="700" height="700" />
+<img src="image-4.png" alt="mom" width="1200" height="500" />
 
 - There is consistent decline in Month-on-Month cancellation rates over the years
 - Cancellation ratees seem to be more stable in recent months, indicating positive progress
@@ -148,7 +148,7 @@ From the variables that are dependent, we can see that:
 
 
 ### Analysis of Cancellation Rates Across HG88's Hotel Types
-<img src="image-5.png" alt="mom" width="900" height="900" />
+<img src="image-5.png" alt="mom" width="1200" height="500" />
 
 - The charts showed that City Hotel contributed significantly to the cancellation rates
 - Leveraging on LLMs, 
