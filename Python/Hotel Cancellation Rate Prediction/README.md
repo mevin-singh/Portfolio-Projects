@@ -151,7 +151,22 @@ From the variables that are dependent, we can see that:
 <img src="image-5.png" alt="mom" width="1200" height="500" />
 
 - The charts showed that City Hotel contributed significantly to the cancellation rates
-- Leveraging on LLMs, 
+- Leveraging on LLMs, our findings revealed that:
+    - Leisure travellers tend to book Resort Hotels with firm plans
+    - City Hotel attract last-minute planners, leading to more cancellations due to shorter booking lead times
+
+### Identifying Factors Driving Cancellation Rates
+To streamline the analysis, 3 key factors merged as primary hypotheses, providing a foundation for strategy formulaiton.
+
+**Booking Lead Time Hypothesis**
+- This hypothesis seeks to prove if the time gap between booking and arrival significantly impacts cancellation rates
+
+<img src="image-6.png" alt="mom" width="1200" height="500" />
+
+The figure above seems to validate the hypothesis, clearly depicting that cancellations rates rise as booking lead time increases. Moreover, most bookings made over 480 days in advanced were cancelled. Using this chart, it appears that these bookings are vulnerable to cancellations and HG88 should prioritise minimising cancellation rates among reservations with high lead times since there is more room for improvement. However, while it is important to consider cancellation rates, the business impact should also be looked at.
+
+<img src="image-7.png" alt="mom" width="1200" height="500" />
+
 ***
 
 # Results and Evaluation
