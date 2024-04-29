@@ -256,17 +256,17 @@ With the help of LLMs, we gathered findings from our preliminary analysis, custo
 ### Tiered Incentivesd Based on Customer Profile
 - To enhance hotel occupancy, offering packaged deals and services can increase customer value and discourage cancellations. 
 - When potential cancellations are identified, HG88 can incentivize guests to retain their bookings. However, considering the diverse consumer profiles with varying preferences, offering uniform incentives to all guests may not be effective. 
-- Personalization is valued by consumers, with research showing that [71% of them expect it from businesses] (https://www.mckinsey.com/capabilities/growth-marketing-and-sales/our-insights/the-value-of-getting-personalization-right-or-wrong-is-multiplying). 
+- Personalization is valued by consumers, with research showing that [71% of them expect it from businesses](https://www.mckinsey.com/capabilities/growth-marketing-and-sales/our-insights/the-value-of-getting-personalization-right-or-wrong-is-multiplying). 
 - Therefore, customizing incentives based on the consumer profiles identified above can effectively reduce cancellation rates.
 
 To identifgy the preferences of each customer profile, we leveraged on LLMs and some of the proposed incentives include:
-<img src="image-18.png" alt="summ" width="1200" height="300" />
+<img src="image-18.png" alt="summ" width="1200" height="200" />
 
 
 ### Strategic Overbooking
-- HG88's cancellation rate of approximately 37%, aligning with the [global average of 40%] (https://hospitalitytech.com/global-cancellation-rate-hotel-reservations-reaches-40-average), reflects the industry's competitive landscape, prompting many hotels to adopt flexible cancellation policies. 
-- Drawing inspiration from the aviation industry, which successfully utilizes overbooking to maximize revenue, HG88 aims to optimize room occupancy. American Airlines, for instance, experienced a [significant revenue increase through overbooking] (https://www.sciencedirect.com/science/article/abs/pii/S1366554504000845). 
-- Despite the potential for increased revenue, overbooking carries inherent risks, necessitating a [robust compensation strategy akin to that of airlines to ensure customer satisfaction] (https://www.usatoday.com/story/travel/columnist/2023/05/10/airline-overbooking-bumped-flight-cruising-altitude/70199667007/). 
+- HG88's cancellation rate of approximately 37%, aligning with the [global average of 40%](https://hospitalitytech.com/global-cancellation-rate-hotel-reservations-reaches-40-average), reflects the industry's competitive landscape, prompting many hotels to adopt flexible cancellation policies. 
+- Drawing inspiration from the aviation industry, which successfully utilizes overbooking to maximize revenue, HG88 aims to optimize room occupancy. American Airlines, for instance, experienced a [significant revenue increase through overbooking](https://www.sciencedirect.com/science/article/abs/pii/S1366554504000845). 
+- Despite the potential for increased revenue, overbooking carries inherent risks, necessitating a [robust compensation strategy akin to that of airlines to ensure customer satisfaction](https://www.usatoday.com/story/travel/columnist/2023/05/10/airline-overbooking-bumped-flight-cruising-altitude/70199667007/). 
 - Balancing predictive capabilities with customer satisfaction is crucial for success. Despite risks, the potential benefits of adopting the overbooking strategy are substantial and promise long-term advantages for HG88.
 
 # Conclusion
