@@ -213,40 +213,46 @@ Determining the optimal threshold involves finding the point of intersection bet
 
 ### Neural Network
 
-<img src="image-13.png" alt="nn1" width="1200" height="300" />
+<img src="image-13.png" alt="nn1" width="1200" height="400" />
 
 Threshold: 0.337
+
 Recall: 0.848
+
 AUC: 0.847
 
 
 ### Random Forest
 
-<img src="image-14.png" alt="rf1" width="1200" height="300" />
+<img src="image-14.png" alt="rf1" width="1200" height="400" />
 
 Threshold: 0.369
+
 Recall: 0.842
+
 AUC: 0.841
 
 
 ### XGBoost
 
-<img src="image-15.png" alt="xgb1" width="1200" height="500" />
+<img src="image-15.png" alt="xgb1" width="1200" height="400" />
 
 Threshold: 0.615
+
 Recall: 0.841
+
 AUC: 0.841
 
 
 ### Summary of False Negatives Pre and Post-Tuning
 
-<img src="image-16.png" alt="fn" width="1200" height="300" />
+<img src="image-16.png" alt="fn" width="1200" height="400" />
 
 Following the adjustments to the threshold, we effectively decreased false positives across the models, with the exception of XGBoost. One potential explanation for this outcome might be attributed to the intricate hyperparameter tuning conducted by RandomizedSearchCV, resulting in susceptibility to noise, outliers, and potential data leakage. Additionally, it's plausible that the random nature of hyperparameter tuning may lead to the best set of hyperparameters after a specified number of iterations not being the optimal choice.
 
 ## Summary of All Metrics
 
-<img src="image-17.png" alt="summ" width="1200" height="300" />
+<img src="image-17.png" alt="summ" width="1200" height="400" />
 
 Models were evaluated based on the metricies above, with the final model selected for the highest AUC and Recall and lowest Business Cost. Thus, our chosen model is the Neural Network.
 
