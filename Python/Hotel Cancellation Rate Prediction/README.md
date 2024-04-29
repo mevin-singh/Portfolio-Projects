@@ -191,20 +191,20 @@ Our dataset reveals an inherent imbalance, with 37% of bookings marked as cancel
 We leveraged on the prowess of LLMs to obtain the code for the Neural Network
 model. The final model that was created generated very positive results, achieving the highest AUC score of all models at 0.845, while the meals under the “BB” category (Breakfast & Bed) were found to be the most significant driver of cancellation.
 
-<img src="image-10.png" alt="nn" width="1000" height="800" />
+<img src="image-10.png" alt="nn" width="1000" height="600" />
 
 
 ## Random Forest
 In order to improve model performance, we tuned the hyperparameters of the RF model using the
 GridSearchCV. These are the hyperparameters of the model after tuning: `criterion` = 'entropy', `max_depth` = 15, `n_estimators` = 300. The model has a moderately high AUC of 0.841 and identified the account of special requests as the most important variable in determining cancellation rates.
 
-<img src="image-11.png" alt="rf" width="1000" height="800" />
+<img src="image-11.png" alt="rf" width="1000" height="600" />
 
 ## XGBoost
 As GridSearchCV took an exceptional amount of time, RandomisedSearchCV was used instead. After
 tuning the model, we obtained the following hyperparameters from RandomSearchCV: `learning_rate` = 0.082, `max_depth` = 8, `n_estimators` = 483, with an AUC of 0.843.
 
-<img src="image-12.png" alt="xgb" width="1000" height="800" />
+<img src="image-12.png" alt="xgb" width="1000" height="600" />
 
 ## Model Evaluation and Comparison
 In predicting hotel cancellations, it is essential to consider both Type I and Type II errors. Type I errors involve inaccurately predicting cancellations, while Type II errors involve mistakenly anticipating non-cancellations. To account for the greater risk associated with Type II errors, we assigned a cost of **$50** to false positives and **$100** to false negatives. This decision stems from the significant revenue loss resulting from canceled bookings compared to the cost of following up on false positive cancellations. Our goal is to optimize Recall and AUC metrics to accurately identify cancellations.
@@ -213,7 +213,7 @@ Determining the optimal threshold involves finding the point of intersection bet
 
 ### Neural Network
 
-<img src="image-13.png" alt="nn1" width="1200" height="500" />
+<img src="image-13.png" alt="nn1" width="1200" height="300" />
 
 Threshold: 0.337
 Recall: 0.848
@@ -222,7 +222,7 @@ AUC: 0.847
 
 ### Random Forest
 
-<img src="image-14.png" alt="rf1" width="1200" height="500" />
+<img src="image-14.png" alt="rf1" width="1200" height="300" />
 
 Threshold: 0.369
 Recall: 0.842
@@ -240,13 +240,13 @@ AUC: 0.841
 
 ### Summary of False Negatives Pre and Post-Tuning
 
-<img src="image-16.png" alt="fn" width="1200" height="500" />
+<img src="image-16.png" alt="fn" width="1200" height="300" />
 
 Following the adjustments to the threshold, we effectively decreased false positives across the models, with the exception of XGBoost. One potential explanation for this outcome might be attributed to the intricate hyperparameter tuning conducted by RandomizedSearchCV, resulting in susceptibility to noise, outliers, and potential data leakage. Additionally, it's plausible that the random nature of hyperparameter tuning may lead to the best set of hyperparameters after a specified number of iterations not being the optimal choice.
 
 ## Summary of All Metrics
 
-<img src="image-17.png" alt="summ" width="1200" height="500" />
+<img src="image-17.png" alt="summ" width="1200" height="300" />
 
 Models were evaluated based on the metricies above, with the final model selected for the highest AUC and Recall and lowest Business Cost. Thus, our chosen model is the Neural Network.
 
