@@ -161,53 +161,94 @@ To streamline the analysis, 3 key factors merged as primary hypotheses, providin
 **Booking Lead Time Hypothesis**
 - This hypothesis seeks to prove if the time gap between booking and arrival significantly impacts cancellation rates
 
-<img src="image-6.png" alt="mom" width="1200" height="500" />
+<img src="image-6.png" alt="book" width="1200" height="500" />
 
 The figure above seems to validate the hypothesis, clearly depicting that cancellations rates rise as booking lead time increases. Moreover, most bookings made over 480 days in advanced were cancelled. Using this chart, it appears that these bookings are vulnerable to cancellations and HG88 should prioritise minimising cancellation rates among reservations with high lead times since there is more room for improvement. However, while it is important to consider cancellation rates, the business impact should also be looked at.
 
-<img src="image-7.png" alt="mom" width="1500" height="400" />
+<img src="image-7.png" alt="book1" width="1500" height="400" />
 
+However, from the image above, we see that the number of bookings and cancellations are clustered around shorter booking lead times. There is only a small number of number booking that were made more than 480 days in advanced. Thus, focusing on reservations with long booking lead times is misguided, and it will be more beneficial for the hotel group toreduce cancellation rates for bookings with shorter lead times since it will cover more reservations.
+
+**Deposit Type Hypothesis**
+- This hypothesis claims that the type of deposit made by the customer will significantly impact the cancellation of bookings.
+
+<img src="image-8.png" alt="deposit" width="600" height="600" />
+
+Surprisingly, our data indicate that people with non-refundable booking tend to cancel more, sitting at 99.36%. Upon closer inspection, it is observed that only 0.1% of total bookings were refundable, which implies that this phenomenon could be an outlier situation. Hence, more data is required before the hypothesis can be accepted or rejected conclusively.
+
+**Seasonal Trend Hypothesis**
+- The final hypothesis is that different seasonal travelling period can affect cancellation rates differently. For example, peak tourist seasons draw in more holiday-goers but also invites fierce competition from rival chains, possibly leading to higher cancellation rates.
+
+<img src="image-9.png" alt="season" width="1200" height="600" />
+
+The figure above demostrates that cancellation rates can be cyclical - peaking between April and June, a popular travelling period. Hence, countermeasures such as dynamic pricing or issuing promo codes could help encourge to stay with their bookings.
 ***
 
-# Results and Evaluation
-## Model Evaluation
-### Multiple Linear Regression
-Regression Output Results:
+# Models
+Our dataset reveals an inherent imbalance, with 37% of bookings marked as canceled. To address this, we turned to ensemble learning methods like Random Forest and XGBoost alongside a Neural Network approach. These techniques are known for their effectiveness in managing imbalanced data distributions.
+
+## Neural Network
+We leveraged on the prowess of LLMs to obtain the code for the Neural Network
+model. The final model that was created generated very positive results, achieving the highest AUC score of all models at 0.845, while the meals under the “BB” category (Breakfast & Bed) were found to be the most significant driver of cancellation.
+
+<img src="image-10.png" alt="nn" width="1000" height="800" />
 
 
+## Random Forest
+In order to improve model performance, we tuned the hyperparameters of the RF model using the
+GridSearchCV. These are the hyperparameters of the model after tuning: `criterion` = 'entropy', `max_depth` = 15, `n_estimators` = 300. The model has a moderately high AUC of 0.841 and identified the account of special requests as the most important variable in determining cancellation rates.
 
-- We can see from the Linear Regression model that the $R^2$ is relatively low, with a value of 0.512. This could indicate that there is non-linear relationships between the variables in the model.
-- Thus, non-linear regression methods will be used subsequently.
+<img src="image-11.png" alt="rf" width="1000" height="800" />
+
+## XGBoost
+As GridSearchCV took an exceptional amount of time, RandomisedSearchCV was used instead. After
+tuning the model, we obtained the following hyperparameters from RandomSearchCV: `learning_rate` = 0.082, `max_depth` = 8, `n_estimators` = 483, with an AUC of 0.843.
+
+<img src="image-12.png" alt="xgb" width="1000" height="800" />
+
+## Model Evaluation and Comparison
+In predicting hotel cancellations, it is essential to consider both Type I and Type II errors. Type I errors involve inaccurately predicting cancellations, while Type II errors involve mistakenly anticipating non-cancellations. To account for the greater risk associated with Type II errors, we assigned a cost of **$50** to false positives and **$100** to false negatives. This decision stems from the significant revenue loss resulting from canceled bookings compared to the cost of following up on false positive cancellations. Our goal is to optimize Recall and AUC metrics to accurately identify cancellations.
+
+Determining the optimal threshold involves finding the point of intersection between the AUC and Recall graph. Tuning this threshold is crucial as it impacts model predictions, business costs, and F1-score. Following threshold adjustments, we successfully reduced false positives across three models, with the exception of XGBoost. This outcome may be attributed to the complex hyperparameter tuning performed by RandomSearchCV, which could render the model susceptible to noise, outliers, and potential data leakage.
+
+### Neural Network
+
+<img src="image-13.png" alt="nn1" width="1200" height="500" />
+
+Threshold: 0.337
+Recall: 0.848
+AUC: 0.847
 
 
-### Non-Linear Regressors
-
-<img src="image-2.png" alt="df" width="1200" height="200" />
-
-- Using $R^2$ as the comparison metric, we can see that among the models, Random Forest came out to the best after tuning with an $R^2$ of 0.825. This means that using Random Forest, we can use the aforementioned features to explain 82.5% of the variation in delivery duration.
-
-
-## Model Interpretation (Feature Importance)
 ### Random Forest
 
-<img src="image-3.png" alt="rf" width="1200" height="500" />
+<img src="image-14.png" alt="rf1" width="1200" height="500" />
+
+Threshold: 0.369
+Recall: 0.842
+AUC: 0.841
 
 
+### XGBoost
 
-### Gradient Boosting
+<img src="image-15.png" alt="xgb1" width="1200" height="500" />
 
-<img src="image-4.png" alt="gb" width="1200" height="500" />
-
-
-
-### Multi-Layer Perceptron
-
-<img src="image-5.png" alt="gb" width="1200" height="500" />
+Threshold: 0.615
+Recall: 0.841
+AUC: 0.841
 
 
-From the feature importances plot, we can see that:
-- Random Forest and Gradient Boosting placed the same importance on Satisfaction Percentage, Low traffic road density and distance. All 3 are very relevant factors that can affect delivery duration.
-- For the Neural Network, the most important feature was distance and it is very clear that it can and will affect delivery duration
+### Summary of False Negatives Pre and Post-Tuning
+
+<img src="image-16.png" alt="fn" width="1200" height="500" />
+
+Following the adjustments to the threshold, we effectively decreased false positives across the models, with the exception of XGBoost. One potential explanation for this outcome might be attributed to the intricate hyperparameter tuning conducted by RandomizedSearchCV, resulting in susceptibility to noise, outliers, and potential data leakage. Additionally, it's plausible that the random nature of hyperparameter tuning may lead to the best set of hyperparameters after a specified number of iterations not being the optimal choice.
+
+## Summary of All Metrics
+
+<img src="image-17.png" alt="summ" width="1200" height="500" />
+
+Models were evaluated based on the metricies above, with the final model selected for the highest AUC and Recall and lowest Business Cost. Thus, our chosen model is the Neural Network.
 
 
 
