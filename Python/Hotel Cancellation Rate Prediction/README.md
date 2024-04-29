@@ -213,21 +213,21 @@ Determining the optimal threshold involves finding the point of intersection bet
 
 ### Neural Network
 
-<img src="image-13.png" alt="nn1" width="900" height="300" />
+<img src="image-13.png" alt="nn1" width="1500" height="600" />
 
 Threshold: 0.337, Recall: 0.848, AUC: 0.847
 
 
 ### Random Forest
 
-<img src="image-14.png" alt="rf1" width="900" height="300" />
+<img src="image-14.png" alt="rf1" width="1500" height="600" />
 
 Threshold: 0.369, Recall: 0.842, AUC: 0.841
 
 
 ### XGBoost
 
-<img src="image-15.png" alt="xgb1" width="900" height="300" />
+<img src="image-15.png" alt="xgb1" width="1500" height="600" />
 
 Threshold: 0.615, Recall: 0.841, AUC: 0.841
 
