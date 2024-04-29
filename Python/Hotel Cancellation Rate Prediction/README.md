@@ -238,15 +238,40 @@ Threshold: 0.615, Recall: 0.841, AUC: 0.841
 
 Following the adjustments to the threshold, we effectively decreased false positives across the models, with the exception of XGBoost. One potential explanation for this outcome might be attributed to the intricate hyperparameter tuning conducted by RandomizedSearchCV, resulting in susceptibility to noise, outliers, and potential data leakage. Additionally, it's plausible that the random nature of hyperparameter tuning may lead to the best set of hyperparameters after a specified number of iterations not being the optimal choice.
 
-## Summary of All Metrics
+### Summary of All Metrics
 
 <img src="image-17.png" alt="summ" width="1200" height="200" />
 
 Models were evaluated based on the metricies above, with the final model selected for the highest AUC and Recall and lowest Business Cost. Thus, our chosen model is the Neural Network.
 
+## Recommendations for HG88
+With the help of LLMs, we gathered findings from our preliminary analysis, customer segmentation and model results to propose the following recommendations to HG88. Our objective is to help HG88 achieve operational efficiency and maximise profits through our recommendations.
+
+### Dynamic Pricing Strategy
+- Dynamic pricing, a standard practice in the hospitality industry, enables businesses to maintain a competitive edge by considering factors like seasonality, competitor pricing, and booking patterns. 
+- This approach optimizes revenue without compromising occupancy rates and can incentivize earlier bookings while mitigating cancellations through price differentiation based on lead time. 
+- For HG88, leveraging dynamic pricing can maximize revenue by adjusting prices during peak demand periods and offering deals during low-demand periods.
+- Implementing tiered cancellation penalties can further encourage booking commitments and reduce the impact of last-minute cancellations, complementing the effectiveness of dynamic pricing in achieving a competitive pricing strategy and lowering cancellation rates.
+
+### Tiered Incentivesd Based on Customer Profile
+- To enhance hotel occupancy, offering packaged deals and services can increase customer value and discourage cancellations. 
+- When potential cancellations are identified, HG88 can incentivize guests to retain their bookings. However, considering the diverse consumer profiles with varying preferences, offering uniform incentives to all guests may not be effective. 
+- Personalization is valued by consumers, with research showing that [71% of them expect it from businesses] (https://www.mckinsey.com/capabilities/growth-marketing-and-sales/our-insights/the-value-of-getting-personalization-right-or-wrong-is-multiplying). 
+- Therefore, customizing incentives based on the consumer profiles identified above can effectively reduce cancellation rates.
+
+To identifgy the preferences of each customer profile, we leveraged on LLMs and some of the proposed incentives include:
+<img src="image-18.png" alt="summ" width="1200" height="300" />
 
 
+### Strategic Overbooking
+- HG88's cancellation rate of approximately 37%, aligning with the [global average of 40%] (https://hospitalitytech.com/global-cancellation-rate-hotel-reservations-reaches-40-average), reflects the industry's competitive landscape, prompting many hotels to adopt flexible cancellation policies. 
+- Drawing inspiration from the aviation industry, which successfully utilizes overbooking to maximize revenue, HG88 aims to optimize room occupancy. American Airlines, for instance, experienced a [significant revenue increase through overbooking] (https://www.sciencedirect.com/science/article/abs/pii/S1366554504000845). 
+- Despite the potential for increased revenue, overbooking carries inherent risks, necessitating a [robust compensation strategy akin to that of airlines to ensure customer satisfaction] (https://www.usatoday.com/story/travel/columnist/2023/05/10/airline-overbooking-bumped-flight-cruising-altitude/70199667007/). 
+- Balancing predictive capabilities with customer satisfaction is crucial for success. Despite risks, the potential benefits of adopting the overbooking strategy are substantial and promise long-term advantages for HG88.
 
+# Conclusion
+In conclusion, SAGA's analysis offers actionable insights to reduce cancellations, increase revenue, and enhance customer satisfaction for HG88. Through EDA, clustering, and predictive modeling, we've identified key cancellation influencers and developed precise forecasting models. Our data-driven recommendations aim to set HG88 apart from competitors, addressing current gaps effectively.
 
-
-
+# Collaborators
+- Keynes Yeo
+- Dave Heng
