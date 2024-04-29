@@ -213,21 +213,21 @@ Determining the optimal threshold involves finding the point of intersection bet
 
 ### Neural Network
 
-<img src="image-13.png" alt="nn1" width="1000" height="400" />
+<img src="image-13.png" alt="nn1" width="900" height="300" />
 
 Threshold: 0.337, Recall: 0.848, AUC: 0.847
 
 
 ### Random Forest
 
-<img src="image-14.png" alt="rf1" width="1000" height="400" />
+<img src="image-14.png" alt="rf1" width="900" height="300" />
 
 Threshold: 0.369, Recall: 0.842, AUC: 0.841
 
 
 ### XGBoost
 
-<img src="image-15.png" alt="xgb1" width="1000" height="400" />
+<img src="image-15.png" alt="xgb1" width="900" height="300" />
 
 Threshold: 0.615, Recall: 0.841, AUC: 0.841
 
@@ -259,7 +259,7 @@ With the help of LLMs, we gathered findings from our preliminary analysis, custo
 - Personalization is valued by consumers, with research showing that [71% of them expect it from businesses](https://www.mckinsey.com/capabilities/growth-marketing-and-sales/our-insights/the-value-of-getting-personalization-right-or-wrong-is-multiplying). 
 - Therefore, customizing incentives based on the consumer profiles identified above can effectively reduce cancellation rates.
 
-To identifgy the preferences of each customer profile, we leveraged on LLMs and some of the proposed incentives include:
+To identify the preferences of each customer profile, we leveraged on LLMs and some of the proposed incentives include:
 <img src="image-18.png" alt="summ" width="1200" height="200" />
 
 
