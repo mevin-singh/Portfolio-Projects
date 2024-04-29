@@ -167,7 +167,7 @@ The figure above seems to validate the hypothesis, clearly depicting that cancel
 
 <img src="image-7.png" alt="book1" width="1500" height="400" />
 
-However, from the image above, we see that the number of bookings and cancellations are clustered around shorter booking lead times. There is only a small number of number booking that were made more than 480 days in advanced. Thus, focusing on reservations with long booking lead times is misguided, and it will be more beneficial for the hotel group toreduce cancellation rates for bookings with shorter lead times since it will cover more reservations.
+From the image above, we see that the number of bookings and cancellations are clustered around shorter booking lead times. There is only a small number of number booking that were made more than 480 days in advanced. Thus, focusing on reservations with long booking lead times is misguided, and it will be more beneficial for the hotel group toreduce cancellation rates for bookings with shorter lead times since it will cover more reservations.
 
 **Deposit Type Hypothesis**
 - This hypothesis claims that the type of deposit made by the customer will significantly impact the cancellation of bookings.
