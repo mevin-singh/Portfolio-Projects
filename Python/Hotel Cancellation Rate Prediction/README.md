@@ -172,7 +172,7 @@ However, from the image above, we see that the number of bookings and cancellati
 **Deposit Type Hypothesis**
 - This hypothesis claims that the type of deposit made by the customer will significantly impact the cancellation of bookings.
 
-<img src="image-8.png" alt="deposit" width="600" height="600" />
+<img src="image-8.png" alt="deposit" width="900" height="400" />
 
 Surprisingly, our data indicate that people with non-refundable booking tend to cancel more, sitting at 99.36%. Upon closer inspection, it is observed that only 0.1% of total bookings were refundable, which implies that this phenomenon could be an outlier situation. Hence, more data is required before the hypothesis can be accepted or rejected conclusively.
 
@@ -191,20 +191,20 @@ Our dataset reveals an inherent imbalance, with 37% of bookings marked as cancel
 We leveraged on the prowess of LLMs to obtain the code for the Neural Network
 model. The final model that was created generated very positive results, achieving the highest AUC score of all models at 0.845, while the meals under the “BB” category (Breakfast & Bed) were found to be the most significant driver of cancellation.
 
-<img src="image-10.png" alt="nn" width="1000" height="600" />
+<img src="image-10.png" alt="nn" width="900" height="500" />
 
 
 ## Random Forest
 In order to improve model performance, we tuned the hyperparameters of the RF model using the
 GridSearchCV. These are the hyperparameters of the model after tuning: `criterion` = 'entropy', `max_depth` = 15, `n_estimators` = 300. The model has a moderately high AUC of 0.841 and identified the account of special requests as the most important variable in determining cancellation rates.
 
-<img src="image-11.png" alt="rf" width="1000" height="600" />
+<img src="image-11.png" alt="rf" width="900" height="500" />
 
 ## XGBoost
 As GridSearchCV took an exceptional amount of time, RandomisedSearchCV was used instead. After
 tuning the model, we obtained the following hyperparameters from RandomSearchCV: `learning_rate` = 0.082, `max_depth` = 8, `n_estimators` = 483, with an AUC of 0.843.
 
-<img src="image-12.png" alt="xgb" width="1000" height="600" />
+<img src="image-12.png" alt="xgb" width="900" height="500" />
 
 ## Model Evaluation and Comparison
 In predicting hotel cancellations, it is essential to consider both Type I and Type II errors. Type I errors involve inaccurately predicting cancellations, while Type II errors involve mistakenly anticipating non-cancellations. To account for the greater risk associated with Type II errors, we assigned a cost of **$50** to false positives and **$100** to false negatives. This decision stems from the significant revenue loss resulting from canceled bookings compared to the cost of following up on false positive cancellations. Our goal is to optimize Recall and AUC metrics to accurately identify cancellations.
@@ -215,27 +215,21 @@ Determining the optimal threshold involves finding the point of intersection bet
 
 <img src="image-13.png" alt="nn1" width="1000" height="400" />
 
-Threshold: 0.337
-Recall: 0.848
-AUC: 0.847
+Threshold: 0.337, Recall: 0.848, AUC: 0.847
 
 
 ### Random Forest
 
 <img src="image-14.png" alt="rf1" width="1000" height="400" />
 
-Threshold: 0.369
-Recall: 0.842
-AUC: 0.841
+Threshold: 0.369, Recall: 0.842, AUC: 0.841
 
 
 ### XGBoost
 
 <img src="image-15.png" alt="xgb1" width="1000" height="400" />
 
-Threshold: 0.615
-Recall: 0.841
-AUC: 0.841
+Threshold: 0.615, Recall: 0.841, AUC: 0.841
 
 
 ### Summary of False Negatives Pre and Post-Tuning
