@@ -252,7 +252,7 @@ With the help of LLMs, we gathered findings from our preliminary analysis, custo
 - For HG88, leveraging dynamic pricing can maximize revenue by adjusting prices during peak demand periods and offering deals during low-demand periods.
 - Implementing tiered cancellation penalties can further encourage booking commitments and reduce the impact of last-minute cancellations, complementing the effectiveness of dynamic pricing in achieving a competitive pricing strategy and lowering cancellation rates.
 
-### Tiered Incentivesd Based on Customer Profile
+### Tiered Incentives Based on Customer Profile
 - To enhance hotel occupancy, offering packaged deals and services can increase customer value and discourage cancellations. 
 - When potential cancellations are identified, HG88 can incentivize guests to retain their bookings. However, considering the diverse consumer profiles with varying preferences, offering uniform incentives to all guests may not be effective. 
 - Personalization is valued by consumers, with research showing that [71% of them expect it from businesses](https://www.mckinsey.com/capabilities/growth-marketing-and-sales/our-insights/the-value-of-getting-personalization-right-or-wrong-is-multiplying). 
