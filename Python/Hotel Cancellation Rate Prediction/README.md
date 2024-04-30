@@ -181,7 +181,7 @@ Surprisingly, our data indicate that people with non-refundable booking tend to 
 
 <img src="image-9.png" alt="season" width="1200" height="600" />
 
-The figure above demostrates that cancellation rates can be cyclical - peaking between April and June, a popular travelling period. Hence, countermeasures such as dynamic pricing or issuing promo codes could help encourge to stay with their bookings.
+The figure above demonstrates that cancellation rates can be cyclical - peaking between April and June, a popular travelling period. Hence, countermeasures such as dynamic pricing or issuing promo codes could help encourage to stay with their bookings.
 
 # Models
 Our dataset reveals an inherent imbalance, with 37% of bookings marked as canceled. To address this, we turned to ensemble learning methods like Random Forest and XGBoost alongside a Neural Network approach. These techniques are known for their effectiveness in managing imbalanced data distributions.
