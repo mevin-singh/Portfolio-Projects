@@ -143,7 +143,7 @@ From the variables that are dependent, we can see that:
 <img src="image-4.png" alt="mom" width="1200" height="500" />
 
 - There is consistent decline in Month-on-Month cancellation rates over the years
-- Cancellation ratees seem to be more stable in recent months, indicating positive progress
+- Cancellation rates seem to be more stable in recent months, indicating positive progress
 - This reduced volatility enhances the planning and resource allocation accuracy
 
 
