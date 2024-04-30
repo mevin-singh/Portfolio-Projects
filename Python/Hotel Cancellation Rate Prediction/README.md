@@ -136,7 +136,7 @@ From the variables that are dependent, we can see that:
 ### Consumer Booking Patterns Over the Years
 <img src="image-3.png" alt="booking" width="1200" height="500" />
 
-- HG88 experienced increased customer engagement and a consistent growth in total bookings over the year. However, this growth also led to a rise in cancellations, as noted by Chua (2020).
+- HG88 experienced increased customer engagement and a consistent growth in total bookings over the years. However, this growth also led to a rise in cancellations, as noted by Chua (2020).
 - Despite the growth rate of total bookings surpassing cancellations, the issue of cancellations remains significant. It is essential to address this concern, even though cancellation rates have declined over time.
 
 ### Month-on-Month Change in Cancellation Rates
